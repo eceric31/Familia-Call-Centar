@@ -1,0 +1,25 @@
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\bin\Debug\Familia Call Centar.exe.config
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\bin\Debug\Familia Call Centar.exe
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\bin\Debug\Familia Call Centar.pdb
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\bin\Debug\EntityFramework.dll
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\bin\Debug\MySql.Data.dll
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\bin\Debug\MySql.Data.Entity.EF6.dll
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\bin\Debug\MySql.Web.dll
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\bin\Debug\EntityFramework.xml
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\View\Dashboard.g.cs
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\View\FoodPicker.g.cs
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\OrderInfo.g.cs
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\App.g.cs
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\Familia Call Centar_Content.g.cs
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\Familia Call Centar_MarkupCompile.cache
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\Familia Call Centar_MarkupCompile.lref
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\View\Dashboard.baml
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\View\FoodPicker.baml
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\OrderInfo.baml
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\Familia Call Centar.g.resources
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\Familia_Call_Centar.Properties.Resources.resources
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\Familia Call Centar.csproj.GenerateResource.Cache
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\Familia Call Centar.exe
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\Familia Call Centar.pdb

@@ -1,0 +1,33 @@
+﻿<Window x:Class="Familia_Call_Centar.OrderInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Familia_Call_Centar"
+        mc:Ignorable="d"
+        Title="OrderInfo" Height="360" Width="640">
+    <Grid>
+        <Frame x:Name="frame" Content="" HorizontalAlignment="Left" Height="309" BorderBrush="Black" BorderThickness="1" Background="LightGray" Opacity="0.5" Margin="10,10,0,0" VerticalAlignment="Top" Width="117"/>
+        <Label x:Name="ime" Content="Ime naručioca" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Width="117"/>
+        <Label x:Name="podaciONaruciocu" Content="Podaci o naručiocu" HorizontalAlignment="Left" Margin="10,31,0,0" BorderBrush="Black" VerticalAlignment="Top" Width="117"/>
+        <Label x:Name="prezime" Content="Prezime naručioca" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="117"/>
+        <Label x:Name="brTel" Content="Broj telefona" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,169.04,0,0" VerticalAlignment="Top" Width="117"/>
+        <Label x:Name="firma" Content="Naziv firme" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,212.09,0,0" VerticalAlignment="Top" Width="117"/>
+        <Label x:Name="adresa" Content="Adresa" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,293.04,0,0" VerticalAlignment="Top" Width="117"/>
+        <Label x:Name="vrijemeIsporuke" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,243.05,0,0" VerticalAlignment="Top" Width="117">
+            <Label.Content>
+                <AccessText TextWrapping="Wrap" Text="Očekivano vrijeme isporuke" HorizontalAlignment="Center">
+                </AccessText>
+            </Label.Content>
+        </Label>
+        <TextBox x:Name="imeInput" VerticalContentAlignment="Center" DataContext="{Binding Narudzba.ime_narucioca}" HorizontalAlignment="Left" Height="26" Width="117" Margin="145,87.96,0,0" TextWrapping="Wrap" BorderBrush="Gray" VerticalAlignment="Top"/>
+        <TextBox x:Name="prezimeInput" VerticalContentAlignment="Center" DataContext="{Binding Narudzba.prezime_narucioca}" HorizontalAlignment="Left" Height="26" Margin="145,128.96,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Gray" Width="117"/>
+        <TextBox x:Name="brTelInput" VerticalContentAlignment="Center" DataContext="{Binding Narudzba.broj_telefona_narucioca}" HorizontalAlignment="Left" Height="26" Margin="145,169,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Gray" Width="117"/>
+        <TextBox x:Name="firmaInput" VerticalContentAlignment="Center" DataContext="{Binding Narudzba.ime_firme}" HorizontalAlignment="Left" Height="26" Margin="145,212.05,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Gray" Width="117"/>
+        <TextBox x:Name="vrijemeIspInput" VerticalContentAlignment="Center" DataContext="{Binding Narudzba.ocekivano_vrijeme_isporuke}" HorizontalAlignment="Left" Height="26" Margin="145,255,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Gray" Width="117"/>
+        <TextBox x:Name="adresaInput" VerticalContentAlignment="Center" DataContext="{Binding Narudzba.adresa_firme}" HorizontalAlignment="Left" Height="26" Margin="145,293,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Gray" Width="117"/>
+        <Button x:Name="dalje" Click="daljeClick" VerticalContentAlignment="Center" Content="Dalje" HorizontalAlignment="Left" Foreground="White" Background="#0844A6"  Margin="547,293,0,0" VerticalAlignment="Top" Width="75" Height="26"/>
+        <Button x:Name="clear" Click="clearClick" VerticalContentAlignment="Center" Content="Očisti" HorizontalAlignment="Left" Margin="457,293,0,0" VerticalAlignment="Top" Width="75" Height="26"/>
+
+    </Grid>
+</Window>
