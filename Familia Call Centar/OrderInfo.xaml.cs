@@ -25,21 +25,17 @@ namespace Familia_Call_Centar
         {
             InitializeComponent();
             oc = new OrderController();
-            DataContext = oc;
-        }
-     
-        private void daljeClick(Object sender, EventArgs e)
+        }        
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if(String.IsNullOrEmpty(imeInput.Text) || String.IsNullOrEmpty(prezimeInput.Text) ||
-                String.IsNullOrEmpty(brTelInput.Text) || String.IsNullOrEmpty(firmaInput.Text) ||
-                String.IsNullOrEmpty(vrijemeIspInput.Text) || String.IsNullOrEmpty(adresaInput.Text))
-            {
-                MessageBoxResult box = MessageBox.Show("Molimo unesite sve parametre!!!");
-            }
-            else oc.saveOrder();
+            System.Windows.Data.CollectionViewSource narudzbaViewSource = 
+                ((System.Windows.Data.CollectionViewSource)(this.FindResource("narudzbaViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // narudzbaViewSource.Source = [generic data source]
         }
 
-        private void clearClick(Object sender, EventArgs e)
+        private void clearClick(object sender, RoutedEventArgs e)
         {
             this.imeInput.Text = "";
             this.prezimeInput.Text = "";
@@ -49,5 +45,24 @@ namespace Familia_Call_Centar
             this.vrijemeIspInput.Text = "";
         }
 
+        private void daljeClick(object sender, RoutedEventArgs e)
+        {
+            if (String.IsNullOrEmpty(imeInput.Text) || String.IsNullOrEmpty(prezimeInput.Text) ||
+               String.IsNullOrEmpty(brTelInput.Text) || String.IsNullOrEmpty(firmaInput.Text) ||
+               String.IsNullOrEmpty(vrijemeIspInput.Text) || String.IsNullOrEmpty(adresaInput.Text))
+            {
+                MessageBoxResult box = MessageBox.Show("Molimo unesite sve parametre!!!");
+            }
+            else
+            {
+                oc.narudzba.ime_narucioca = imeInput.Text;
+                oc.narudzba.prezime_narucioca = prezimeInput.Text;
+                oc.narudzba.broj_telefona_narucioca = brTelInput.Text;
+                oc.narudzba.ime_firme = firmaInput.Text;
+                oc.narudzba.adresa_firme = adresaInput.Text;
+                oc.narudzba.ocekivano_vrijeme_isporuke = Convert.ToDateTime(vrijemeIspInput.Text);
+                oc.saveOrder();
+            }
+        }
     }
 }

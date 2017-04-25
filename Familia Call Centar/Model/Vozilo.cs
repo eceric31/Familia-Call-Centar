@@ -10,14 +10,14 @@
 namespace Familia_Call_Centar.Model
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class vozilo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public vozilo()
         {
-            this.voznja = new HashSet<voznja>();
+            this.voznja = new ObservableCollection<voznja>();
         }
     
         public int voziloID { get; set; }
@@ -25,6 +25,6 @@ namespace Familia_Call_Centar.Model
         public int nosivost { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<voznja> voznja { get; set; }
+        public virtual ObservableCollection<voznja> voznja { get; set; }
     }
 }

@@ -10,7 +10,7 @@
 namespace Familia_Call_Centar.Model
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class checkpoint
     {

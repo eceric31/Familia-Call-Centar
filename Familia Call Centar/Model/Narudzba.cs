@@ -10,14 +10,14 @@
 namespace Familia_Call_Centar.Model
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class narudzba
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public narudzba()
         {
-            this.narudzba_item = new HashSet<narudzba_item>();
+            this.narudzba_item = new ObservableCollection<narudzba_item>();
         }
     
         public int narudzbaID { get; set; }
@@ -32,6 +32,6 @@ namespace Familia_Call_Centar.Model
     
         public virtual voznja voznja { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<narudzba_item> narudzba_item { get; set; }
+        public virtual ObservableCollection<narudzba_item> narudzba_item { get; set; }
     }
 }

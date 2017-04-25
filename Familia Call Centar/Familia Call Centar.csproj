@@ -97,7 +97,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Checkpoint.cs">
+    <Compile Include="Model\checkpoint.cs">
       <DependentUpon>FamiliaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FamiliaModel.Context.cs">
@@ -115,25 +115,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FamiliaModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Model\Jelo.cs">
+    <Compile Include="Model\jelo.cs">
       <DependentUpon>FamiliaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\lokacija.cs">
       <DependentUpon>FamiliaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Narudzba.cs">
+    <Compile Include="Model\narudzba.cs">
       <DependentUpon>FamiliaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\narudzba_item.cs">
       <DependentUpon>FamiliaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Vozac.cs">
+    <Compile Include="Model\vozac.cs">
       <DependentUpon>FamiliaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Vozilo.cs">
+    <Compile Include="Model\vozilo.cs">
       <DependentUpon>FamiliaModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Voznja.cs">
+    <Compile Include="Model\voznja.cs">
       <DependentUpon>FamiliaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="View\Dashboard.xaml.cs">
@@ -170,6 +170,7 @@
       <DependentUpon>FamiliaModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Familia_Call_Centar.Model.narudzba.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -179,9 +180,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\DataSources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Model\FamiliaModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

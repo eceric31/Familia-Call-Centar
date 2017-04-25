@@ -10,16 +10,16 @@
 namespace Familia_Call_Centar.Model
 {
     using System;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     
     public partial class voznja
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public voznja()
         {
-            this.narudzba = new HashSet<narudzba>();
-            this.checkpoint = new HashSet<checkpoint>();
-            this.lokacija = new HashSet<lokacija>();
+            this.narudzba = new ObservableCollection<narudzba>();
+            this.checkpoint = new ObservableCollection<checkpoint>();
+            this.lokacija = new ObservableCollection<lokacija>();
         }
     
         public int voznjaID { get; set; }
@@ -27,12 +27,12 @@ namespace Familia_Call_Centar.Model
         public int vozacID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<narudzba> narudzba { get; set; }
+        public virtual ObservableCollection<narudzba> narudzba { get; set; }
         public virtual vozac vozac { get; set; }
         public virtual vozilo vozilo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<checkpoint> checkpoint { get; set; }
+        public virtual ObservableCollection<checkpoint> checkpoint { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<lokacija> lokacija { get; set; }
+        public virtual ObservableCollection<lokacija> lokacija { get; set; }
     }
 }
