@@ -98,43 +98,43 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\checkpoint.cs">
-      <DependentUpon>FamiliaModel.tt</DependentUpon>
+      <DependentUpon>Familia.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\FamiliaModel.Context.cs">
+    <Compile Include="Model\Familia.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FamiliaModel.Context.tt</DependentUpon>
+      <DependentUpon>Familia.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\FamiliaModel.cs">
+    <Compile Include="Model\Familia.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FamiliaModel.tt</DependentUpon>
+      <DependentUpon>Familia.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\FamiliaModel.Designer.cs">
+    <Compile Include="Model\Familia.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FamiliaModel.edmx</DependentUpon>
+      <DependentUpon>Familia.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\jelo.cs">
-      <DependentUpon>FamiliaModel.tt</DependentUpon>
+      <DependentUpon>Familia.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\lokacija.cs">
-      <DependentUpon>FamiliaModel.tt</DependentUpon>
+      <DependentUpon>Familia.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\narudzba.cs">
-      <DependentUpon>FamiliaModel.tt</DependentUpon>
+      <DependentUpon>Familia.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\narudzba_item.cs">
-      <DependentUpon>FamiliaModel.tt</DependentUpon>
+      <DependentUpon>Familia.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\vozac.cs">
-      <DependentUpon>FamiliaModel.tt</DependentUpon>
+      <DependentUpon>Familia.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\vozilo.cs">
-      <DependentUpon>FamiliaModel.tt</DependentUpon>
+      <DependentUpon>Familia.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\voznja.cs">
-      <DependentUpon>FamiliaModel.tt</DependentUpon>
+      <DependentUpon>Familia.tt</DependentUpon>
     </Compile>
     <Compile Include="View\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
@@ -162,12 +162,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Model\FamiliaModel.edmx">
+    <EntityDeploy Include="Model\Familia.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FamiliaModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>Familia.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Model\FamiliaModel.edmx.diagram">
-      <DependentUpon>FamiliaModel.edmx</DependentUpon>
+    <None Include="Model\Familia.edmx.diagram">
+      <DependentUpon>Familia.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Familia_Call_Centar.Model.narudzba.datasource" />
@@ -182,15 +182,15 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Model\FamiliaModel.Context.tt">
+    <Content Include="Model\Familia.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FamiliaModel.edmx</DependentUpon>
-      <LastGenOutput>FamiliaModel.Context.cs</LastGenOutput>
+      <DependentUpon>Familia.edmx</DependentUpon>
+      <LastGenOutput>Familia.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model\FamiliaModel.tt">
+    <Content Include="Model\Familia.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FamiliaModel.edmx</DependentUpon>
-      <LastGenOutput>FamiliaModel.cs</LastGenOutput>
+      <DependentUpon>Familia.edmx</DependentUpon>
+      <LastGenOutput>Familia.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

@@ -6,12 +6,12 @@ namespace Familia_Call_Centar.Controller
     public class OrderController
     {
         public narudzba narudzba { get; set; }
-        testnaEntities db { get; set; }
+        FamiliaContextClass db { get; set; }
 
         public OrderController()
         {
             narudzba = new narudzba();
-            db = new testnaEntities();
+            db = new FamiliaContextClass();
         }
 
         public void saveOrder()

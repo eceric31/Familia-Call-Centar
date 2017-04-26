@@ -13,10 +13,10 @@ namespace Familia_Call_Centar.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class testnaEntities : DbContext
+    public partial class FamiliaContextClass : DbContext
     {
-        public testnaEntities()
-            : base("name=testnaEntities")
+        public FamiliaContextClass()
+            : base("name=FamiliaContextClass")
         {
         }
     

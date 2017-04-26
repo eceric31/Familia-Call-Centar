@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="testnaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="familiaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'def.testna.checkpoint' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="checkpoint">
@@ -176,7 +176,7 @@ warning 6002: The table/view 'def.testna.lokacija' does not have a primary key d
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="testnaModelStoreContainer">
+        <EntityContainer Name="familiaModelStoreContainer">
           <EntitySet Name="jelo" EntityType="Self.jelo" Schema="testna" store:Type="Tables" />
           <EntitySet Name="narudzba" EntityType="Self.narudzba" Schema="testna" store:Type="Tables" />
           <EntitySet Name="narudzba_item" EntityType="Self.narudzba_item" Schema="testna" store:Type="Tables" />
@@ -232,7 +232,7 @@ FROM `lokacija` AS `lokacija`</DefiningQuery>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="testnaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="familiaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="jelo">
           <Key>
             <PropertyRef Name="jeloID" />
@@ -414,7 +414,7 @@ FROM `lokacija` AS `lokacija`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="testnaEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="FamiliaContextClass" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="jelo" EntityType="Self.jelo" />
           <EntitySet Name="narudzba" EntityType="Self.narudzba" />
           <EntitySet Name="narudzba_item" EntityType="Self.narudzba_item" />
@@ -457,9 +457,9 @@ FROM `lokacija` AS `lokacija`</DefiningQuery>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="testnaModelStoreContainer" CdmEntityContainer="testnaEntities">
+        <EntityContainerMapping StorageEntityContainer="familiaModelStoreContainer" CdmEntityContainer="FamiliaContextClass">
           <EntitySetMapping Name="jelo">
-            <EntityTypeMapping TypeName="testnaModel.jelo">
+            <EntityTypeMapping TypeName="familiaModel.jelo">
               <MappingFragment StoreEntitySet="jelo">
                 <ScalarProperty Name="jeloID" ColumnName="jeloID" />
                 <ScalarProperty Name="naziv" ColumnName="naziv" />
@@ -470,7 +470,7 @@ FROM `lokacija` AS `lokacija`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="narudzba">
-            <EntityTypeMapping TypeName="testnaModel.narudzba">
+            <EntityTypeMapping TypeName="familiaModel.narudzba">
               <MappingFragment StoreEntitySet="narudzba">
                 <ScalarProperty Name="narudzbaID" ColumnName="narudzbaID" />
                 <ScalarProperty Name="ime_narucioca" ColumnName="ime_narucioca" />
@@ -485,7 +485,7 @@ FROM `lokacija` AS `lokacija`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="narudzba_item">
-            <EntityTypeMapping TypeName="testnaModel.narudzba_item">
+            <EntityTypeMapping TypeName="familiaModel.narudzba_item">
               <MappingFragment StoreEntitySet="narudzba_item">
                 <ScalarProperty Name="narudzba_itemID" ColumnName="narudzba_itemID" />
                 <ScalarProperty Name="kvantitet" ColumnName="kvantitet" />
@@ -496,7 +496,7 @@ FROM `lokacija` AS `lokacija`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vozac">
-            <EntityTypeMapping TypeName="testnaModel.vozac">
+            <EntityTypeMapping TypeName="familiaModel.vozac">
               <MappingFragment StoreEntitySet="vozac">
                 <ScalarProperty Name="vozacID" ColumnName="vozacID" />
                 <ScalarProperty Name="ime" ColumnName="ime" />
@@ -506,7 +506,7 @@ FROM `lokacija` AS `lokacija`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vozilo">
-            <EntityTypeMapping TypeName="testnaModel.vozilo">
+            <EntityTypeMapping TypeName="familiaModel.vozilo">
               <MappingFragment StoreEntitySet="vozilo">
                 <ScalarProperty Name="voziloID" ColumnName="voziloID" />
                 <ScalarProperty Name="tip_vozila" ColumnName="tip_vozila" />
@@ -515,7 +515,7 @@ FROM `lokacija` AS `lokacija`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="voznja">
-            <EntityTypeMapping TypeName="testnaModel.voznja">
+            <EntityTypeMapping TypeName="familiaModel.voznja">
               <MappingFragment StoreEntitySet="voznja">
                 <ScalarProperty Name="voznjaID" ColumnName="voznjaID" />
                 <ScalarProperty Name="voziloID" ColumnName="voziloID" />
@@ -524,7 +524,7 @@ FROM `lokacija` AS `lokacija`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="checkpoint">
-            <EntityTypeMapping TypeName="testnaModel.checkpoint">
+            <EntityTypeMapping TypeName="familiaModel.checkpoint">
               <MappingFragment StoreEntitySet="checkpoint">
                 <ScalarProperty Name="longitude" ColumnName="longitude" />
                 <ScalarProperty Name="latitude" ColumnName="latitude" />
@@ -534,7 +534,7 @@ FROM `lokacija` AS `lokacija`</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="lokacija">
-            <EntityTypeMapping TypeName="testnaModel.lokacija">
+            <EntityTypeMapping TypeName="familiaModel.lokacija">
               <MappingFragment StoreEntitySet="lokacija">
                 <ScalarProperty Name="longitude" ColumnName="longitude" />
                 <ScalarProperty Name="latitude" ColumnName="latitude" />
