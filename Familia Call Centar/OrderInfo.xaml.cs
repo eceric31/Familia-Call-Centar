@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Familia_Call_Centar.Controller;
+using Familia_Call_Centar.Model;
 
 namespace Familia_Call_Centar
 {
@@ -20,29 +20,17 @@ namespace Familia_Call_Centar
     /// </summary>
     public partial class OrderInfo : Window
     {
-        OrderController oc;
+        narudzba narudzba;
+        FamiliaContextClass db;
         public OrderInfo()
         {
             InitializeComponent();
-            oc = new OrderController();
+            db = new FamiliaContextClass();
         }        
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Data.CollectionViewSource narudzbaViewSource = 
-                ((System.Windows.Data.CollectionViewSource)(this.FindResource("narudzbaViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // narudzbaViewSource.Source = [generic data source]
-        }
 
         private void clearClick(object sender, RoutedEventArgs e)
         {
-            this.imeInput.Text = "";
-            this.prezimeInput.Text = "";
-            this.brTelInput.Text = "";
-            this.firmaInput.Text = "";
-            this.adresaInput.Text = "";
-            this.vrijemeIspInput.Text = "";
+            clearInput();
         }
 
         private void daljeClick(object sender, RoutedEventArgs e)
@@ -51,18 +39,51 @@ namespace Familia_Call_Centar
                String.IsNullOrEmpty(brTelInput.Text) || String.IsNullOrEmpty(firmaInput.Text) ||
                String.IsNullOrEmpty(vrijemeIspInput.Text) || String.IsNullOrEmpty(adresaInput.Text))
             {
-                MessageBoxResult box = MessageBox.Show("Molimo unesite sve parametre!!!");
+                MessageBoxResult box = MessageBox.Show("Molimo unesite sve parametre!");
             }
             else
             {
-                oc.narudzba.ime_narucioca = imeInput.Text;
-                oc.narudzba.prezime_narucioca = prezimeInput.Text;
-                oc.narudzba.broj_telefona_narucioca = brTelInput.Text;
-                oc.narudzba.ime_firme = firmaInput.Text;
-                oc.narudzba.adresa_firme = adresaInput.Text;
-                oc.narudzba.ocekivano_vrijeme_isporuke = Convert.ToDateTime(vrijemeIspInput.Text);
-                oc.saveOrder();
+                saveOrder();
             }
+        }
+
+        public void saveOrder()
+        {
+            narudzba = new narudzba();
+            narudzba.ime_narucioca = imeInput.Text;
+            narudzba.prezime_narucioca = prezimeInput.Text;
+            narudzba.broj_telefona_narucioca = brTelInput.Text;
+            narudzba.ime_firme = firmaInput.Text;
+            narudzba.adresa_firme = adresaInput.Text;
+            try
+            {
+                narudzba.ocekivano_vrijeme_isporuke = Convert.ToDateTime(vrijemeIspInput.Text);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+                MessageBoxResult box = MessageBox.Show("Unijeli ste pogrešan vremenski format!");
+                vrijemeIspInput.Clear();
+            }
+            db.narudzba.Add(narudzba);
+            try
+            {
+                db.SaveChangesAsync();
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
+        }
+
+        private void clearInput()
+        {
+            imeInput.Clear();
+            prezimeInput.Clear();
+            brTelInput.Clear();
+            firmaInput.Clear();
+            adresaInput.Clear();
+            vrijemeIspInput.Clear();
         }
     }
 }

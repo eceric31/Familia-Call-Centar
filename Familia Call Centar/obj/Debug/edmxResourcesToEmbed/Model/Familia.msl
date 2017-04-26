@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="familiaModelStoreContainer" CdmEntityContainer="FamiliaContextClass">
+    <EntitySetMapping Name="jelo">
+      <EntityTypeMapping TypeName="familiaModel.jelo">
+        <MappingFragment StoreEntitySet="jelo">
+          <ScalarProperty Name="jeloID" ColumnName="jeloID" />
+          <ScalarProperty Name="naziv" ColumnName="naziv" />
+          <ScalarProperty Name="opis" ColumnName="opis" />
+          <ScalarProperty Name="tip_jela" ColumnName="tip_jela" />
+          <ScalarProperty Name="cijena" ColumnName="cijena" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="narudzba">
+      <EntityTypeMapping TypeName="familiaModel.narudzba">
+        <MappingFragment StoreEntitySet="narudzba">
+          <ScalarProperty Name="narudzbaID" ColumnName="narudzbaID" />
+          <ScalarProperty Name="ime_narucioca" ColumnName="ime_narucioca" />
+          <ScalarProperty Name="prezime_narucioca" ColumnName="prezime_narucioca" />
+          <ScalarProperty Name="broj_telefona_narucioca" ColumnName="broj_telefona_narucioca" />
+          <ScalarProperty Name="ime_firme" ColumnName="ime_firme" />
+          <ScalarProperty Name="adresa_firme" ColumnName="adresa_firme" />
+          <ScalarProperty Name="ocekivano_vrijeme_isporuke" ColumnName="ocekivano_vrijeme_isporuke" />
+          <ScalarProperty Name="vrijeme_isporuke" ColumnName="vrijeme_isporuke" />
+          <ScalarProperty Name="voznjaID" ColumnName="voznjaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="narudzba_item">
+      <EntityTypeMapping TypeName="familiaModel.narudzba_item">
+        <MappingFragment StoreEntitySet="narudzba_item">
+          <ScalarProperty Name="narudzba_itemID" ColumnName="narudzba_itemID" />
+          <ScalarProperty Name="kvantitet" ColumnName="kvantitet" />
+          <ScalarProperty Name="ukupna_cijena" ColumnName="ukupna_cijena" />
+          <ScalarProperty Name="jeloID" ColumnName="jeloID" />
+          <ScalarProperty Name="narudzbaID" ColumnName="narudzbaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vozac">
+      <EntityTypeMapping TypeName="familiaModel.vozac">
+        <MappingFragment StoreEntitySet="vozac">
+          <ScalarProperty Name="vozacID" ColumnName="vozacID" />
+          <ScalarProperty Name="ime" ColumnName="ime" />
+          <ScalarProperty Name="prezime" ColumnName="prezime" />
+          <ScalarProperty Name="passsword" ColumnName="passsword" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vozilo">
+      <EntityTypeMapping TypeName="familiaModel.vozilo">
+        <MappingFragment StoreEntitySet="vozilo">
+          <ScalarProperty Name="voziloID" ColumnName="voziloID" />
+          <ScalarProperty Name="tip_vozila" ColumnName="tip_vozila" />
+          <ScalarProperty Name="nosivost" ColumnName="nosivost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="voznja">
+      <EntityTypeMapping TypeName="familiaModel.voznja">
+        <MappingFragment StoreEntitySet="voznja">
+          <ScalarProperty Name="voznjaID" ColumnName="voznjaID" />
+          <ScalarProperty Name="voziloID" ColumnName="voziloID" />
+          <ScalarProperty Name="vozacID" ColumnName="vozacID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="checkpoint">
+      <EntityTypeMapping TypeName="familiaModel.checkpoint">
+        <MappingFragment StoreEntitySet="checkpoint">
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="vrijeme_isporuke" ColumnName="vrijeme_isporuke" />
+          <ScalarProperty Name="voznjaID" ColumnName="voznjaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="lokacija">
+      <EntityTypeMapping TypeName="familiaModel.lokacija">
+        <MappingFragment StoreEntitySet="lokacija">
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="vrijeme_polaska" ColumnName="vrijeme_polaska" />
+          <ScalarProperty Name="voznjaID" ColumnName="voznjaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

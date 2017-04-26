@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="familiaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="jelo">
+    <Key>
+      <PropertyRef Name="jeloID" />
+    </Key>
+    <Property Name="jeloID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="naziv" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="opis" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="tip_jela" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="cijena" Type="Double" />
+    <NavigationProperty Name="narudzba_item" Relationship="Self.Narudzba_item_ibfk_1" FromRole="jelo" ToRole="narudzba_item" />
+  </EntityType>
+  <EntityType Name="narudzba">
+    <Key>
+      <PropertyRef Name="narudzbaID" />
+    </Key>
+    <Property Name="narudzbaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ime_narucioca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="prezime_narucioca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="broj_telefona_narucioca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ime_firme" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="adresa_firme" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ocekivano_vrijeme_isporuke" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="vrijeme_isporuke" Type="DateTime" Nullable="false" />
+    <Property Name="voznjaID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="voznja" Relationship="Self.Narudzba_ibfk_1" FromRole="narudzba" ToRole="voznja" />
+    <NavigationProperty Name="narudzba_item" Relationship="Self.Narudzba_item_ibfk_2" FromRole="narudzba" ToRole="narudzba_item" />
+  </EntityType>
+  <EntityType Name="narudzba_item">
+    <Key>
+      <PropertyRef Name="narudzba_itemID" />
+    </Key>
+    <Property Name="narudzba_itemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kvantitet" Type="Int32" Nullable="false" />
+    <Property Name="ukupna_cijena" Type="Double" />
+    <Property Name="jeloID" Type="Int32" Nullable="false" />
+    <Property Name="narudzbaID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="jelo" Relationship="Self.Narudzba_item_ibfk_1" FromRole="narudzba_item" ToRole="jelo" />
+    <NavigationProperty Name="narudzba" Relationship="Self.Narudzba_item_ibfk_2" FromRole="narudzba_item" ToRole="narudzba" />
+  </EntityType>
+  <EntityType Name="vozac">
+    <Key>
+      <PropertyRef Name="vozacID" />
+    </Key>
+    <Property Name="vozacID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ime" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="prezime" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="passsword" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="voznja" Relationship="Self.Voznja_ibfk_2" FromRole="vozac" ToRole="voznja" />
+  </EntityType>
+  <EntityType Name="vozilo">
+    <Key>
+      <PropertyRef Name="voziloID" />
+    </Key>
+    <Property Name="voziloID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tip_vozila" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nosivost" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="voznja" Relationship="Self.Voznja_ibfk_1" FromRole="vozilo" ToRole="voznja" />
+  </EntityType>
+  <EntityType Name="voznja">
+    <Key>
+      <PropertyRef Name="voznjaID" />
+    </Key>
+    <Property Name="voznjaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="voziloID" Type="Int32" Nullable="false" />
+    <Property Name="vozacID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="narudzba" Relationship="Self.Narudzba_ibfk_1" FromRole="voznja" ToRole="narudzba" />
+    <NavigationProperty Name="vozac" Relationship="Self.Voznja_ibfk_2" FromRole="voznja" ToRole="vozac" />
+    <NavigationProperty Name="vozilo" Relationship="Self.Voznja_ibfk_1" FromRole="voznja" ToRole="vozilo" />
+    <NavigationProperty Name="checkpoint" Relationship="Self.Checkpoint_ibfk_1" FromRole="voznja" ToRole="checkpoint" />
+    <NavigationProperty Name="lokacija" Relationship="Self.Lokacija_ibfk_1" FromRole="voznja" ToRole="lokacija" />
+  </EntityType>
+  <EntityType Name="checkpoint">
+    <Key>
+      <PropertyRef Name="longitude" />
+      <PropertyRef Name="latitude" />
+      <PropertyRef Name="vrijeme_isporuke" />
+      <PropertyRef Name="voznjaID" />
+    </Key>
+    <Property Name="longitude" Type="Double" Nullable="false" />
+    <Property Name="latitude" Type="Double" Nullable="false" />
+    <Property Name="vrijeme_isporuke" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="voznjaID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="voznja" Relationship="Self.Checkpoint_ibfk_1" FromRole="checkpoint" ToRole="voznja" />
+  </EntityType>
+  <EntityType Name="lokacija">
+    <Key>
+      <PropertyRef Name="longitude" />
+      <PropertyRef Name="latitude" />
+      <PropertyRef Name="vrijeme_polaska" />
+      <PropertyRef Name="voznjaID" />
+    </Key>
+    <Property Name="longitude" Type="Double" Nullable="false" />
+    <Property Name="latitude" Type="Double" Nullable="false" />
+    <Property Name="vrijeme_polaska" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="voznjaID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="voznja" Relationship="Self.Lokacija_ibfk_1" FromRole="lokacija" ToRole="voznja" />
+  </EntityType>
+  <Association Name="Narudzba_item_ibfk_1">
+    <End Role="jelo" Type="Self.jelo" Multiplicity="1" />
+    <End Role="narudzba_item" Type="Self.narudzba_item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="jelo">
+        <PropertyRef Name="jeloID" />
+      </Principal>
+      <Dependent Role="narudzba_item">
+        <PropertyRef Name="jeloID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Narudzba_ibfk_1">
+    <End Role="voznja" Type="Self.voznja" Multiplicity="1" />
+    <End Role="narudzba" Type="Self.narudzba" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="voznja">
+        <PropertyRef Name="voznjaID" />
+      </Principal>
+      <Dependent Role="narudzba">
+        <PropertyRef Name="voznjaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Narudzba_item_ibfk_2">
+    <End Role="narudzba" Type="Self.narudzba" Multiplicity="1" />
+    <End Role="narudzba_item" Type="Self.narudzba_item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="narudzba">
+        <PropertyRef Name="narudzbaID" />
+      </Principal>
+      <Dependent Role="narudzba_item">
+        <PropertyRef Name="narudzbaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Voznja_ibfk_2">
+    <End Role="vozac" Type="Self.vozac" Multiplicity="1" />
+    <End Role="voznja" Type="Self.voznja" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vozac">
+        <PropertyRef Name="vozacID" />
+      </Principal>
+      <Dependent Role="voznja">
+        <PropertyRef Name="vozacID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Voznja_ibfk_1">
+    <End Role="vozilo" Type="Self.vozilo" Multiplicity="1" />
+    <End Role="voznja" Type="Self.voznja" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="vozilo">
+        <PropertyRef Name="voziloID" />
+      </Principal>
+      <Dependent Role="voznja">
+        <PropertyRef Name="voziloID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Checkpoint_ibfk_1">
+    <End Role="voznja" Type="Self.voznja" Multiplicity="1" />
+    <End Role="checkpoint" Type="Self.checkpoint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="voznja">
+        <PropertyRef Name="voznjaID" />
+      </Principal>
+      <Dependent Role="checkpoint">
+        <PropertyRef Name="voznjaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Lokacija_ibfk_1">
+    <End Role="voznja" Type="Self.voznja" Multiplicity="1" />
+    <End Role="lokacija" Type="Self.lokacija" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="voznja">
+        <PropertyRef Name="voznjaID" />
+      </Principal>
+      <Dependent Role="lokacija">
+        <PropertyRef Name="voznjaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FamiliaContextClass" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="jelo" EntityType="Self.jelo" />
+    <EntitySet Name="narudzba" EntityType="Self.narudzba" />
+    <EntitySet Name="narudzba_item" EntityType="Self.narudzba_item" />
+    <EntitySet Name="vozac" EntityType="Self.vozac" />
+    <EntitySet Name="vozilo" EntityType="Self.vozilo" />
+    <EntitySet Name="voznja" EntityType="Self.voznja" />
+    <EntitySet Name="checkpoint" EntityType="Self.checkpoint" />
+    <EntitySet Name="lokacija" EntityType="Self.lokacija" />
+    <AssociationSet Name="Narudzba_item_ibfk_1" Association="Self.Narudzba_item_ibfk_1">
+      <End Role="jelo" EntitySet="jelo" />
+      <End Role="narudzba_item" EntitySet="narudzba_item" />
+    </AssociationSet>
+    <AssociationSet Name="Narudzba_ibfk_1" Association="Self.Narudzba_ibfk_1">
+      <End Role="voznja" EntitySet="voznja" />
+      <End Role="narudzba" EntitySet="narudzba" />
+    </AssociationSet>
+    <AssociationSet Name="Narudzba_item_ibfk_2" Association="Self.Narudzba_item_ibfk_2">
+      <End Role="narudzba" EntitySet="narudzba" />
+      <End Role="narudzba_item" EntitySet="narudzba_item" />
+    </AssociationSet>
+    <AssociationSet Name="Voznja_ibfk_2" Association="Self.Voznja_ibfk_2">
+      <End Role="vozac" EntitySet="vozac" />
+      <End Role="voznja" EntitySet="voznja" />
+    </AssociationSet>
+    <AssociationSet Name="Voznja_ibfk_1" Association="Self.Voznja_ibfk_1">
+      <End Role="vozilo" EntitySet="vozilo" />
+      <End Role="voznja" EntitySet="voznja" />
+    </AssociationSet>
+    <AssociationSet Name="Checkpoint_ibfk_1" Association="Self.Checkpoint_ibfk_1">
+      <End Role="voznja" EntitySet="voznja" />
+      <End Role="checkpoint" EntitySet="checkpoint" />
+    </AssociationSet>
+    <AssociationSet Name="Lokacija_ibfk_1" Association="Self.Lokacija_ibfk_1">
+      <End Role="voznja" EntitySet="voznja" />
+      <End Role="lokacija" EntitySet="lokacija" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

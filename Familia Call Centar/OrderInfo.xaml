@@ -15,24 +15,33 @@
             <ColumnDefinition Width="85*"/>
             <ColumnDefinition Width="73*"/>
         </Grid.ColumnDefinitions>
-        <Frame x:Name="frame" Content="" HorizontalAlignment="Left" Height="309" BorderBrush="Black" BorderThickness="1" Background="LightGray" Opacity="0.5" Margin="10,10,0,0" VerticalAlignment="Top" Width="117"/>
-        <Label x:Name="ime" Content="Ime naručioca" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Width="117"/>
-        <Label x:Name="podaciONaruciocu" Content="Podaci o naručiocu" HorizontalAlignment="Left" Margin="10,31,0,0" BorderBrush="Black" VerticalAlignment="Top" Width="117"/>
-        <Label x:Name="prezime" Content="Prezime naručioca" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="117"/>
-        <Label x:Name="brTel" Content="Broj telefona" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,169,0,0" VerticalAlignment="Top" Width="117"/>
-        <Label x:Name="firma" Content="Naziv firme" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,212,0,0" VerticalAlignment="Top" Width="117"/>
-        <Label x:Name="adresa" Content="Adresa" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,293,0,0" VerticalAlignment="Top" Width="117"/>
-        <Label x:Name="vrijemeIsporuke" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,243,0,0" VerticalAlignment="Top" Width="117">
-            <AccessText TextWrapping="Wrap" Text="Očekivano vrijeme isporuke" HorizontalAlignment="Center"/>
-        </Label>
-        <TextBox x:Name="imeInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Width="117" Margin="145,88,0,0" TextWrapping="Wrap" BorderBrush="Gray" VerticalAlignment="Top" Text="{Binding ime_narucioca, Mode=TwoWay, NotifyOnValidationError=true, Source={StaticResource narudzbaViewSource}, ValidatesOnExceptions=true}"/>
-        <TextBox x:Name="prezimeInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="145,129,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Gray" Width="117" Text="{Binding prezime_narucioca, Mode=TwoWay, NotifyOnValidationError=true, Source={StaticResource narudzbaViewSource}, ValidatesOnExceptions=true}"/>
-        <TextBox x:Name="brTelInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="145,169,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Gray" Width="117" Text="{Binding broj_telefona_narucioca, Mode=TwoWay, NotifyOnValidationError=true, Source={StaticResource narudzbaViewSource}, ValidatesOnExceptions=true}"/>
-        <TextBox x:Name="firmaInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="145,212,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Gray" Width="117" Text="{Binding ime_firme, Mode=TwoWay, NotifyOnValidationError=true, Source={StaticResource narudzbaViewSource}, ValidatesOnExceptions=true}"/>
-        <TextBox x:Name="vrijemeIspInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="145,255,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Gray" Width="117" Text="{Binding ocekivano_vrijeme_isporuke, Mode=TwoWay, NotifyOnValidationError=true, Source={StaticResource narudzbaViewSource}, ValidatesOnExceptions=true}"/>
-        <TextBox x:Name="adresaInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="145,293,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Gray" Width="117" Text="{Binding adresa_firme, Mode=TwoWay, NotifyOnValidationError=true, Source={StaticResource narudzbaViewSource}, ValidatesOnExceptions=true}"/>
+       
+        <Frame x:Name="frame" Content="" HorizontalAlignment="Left" Height="309" BorderBrush="Black" BorderThickness="1" Background="LightGray" Opacity="0.5" Margin="10,10,0,0" VerticalAlignment="Top" Width="190"/>
+        <Label x:Name="podaciONaruciocu" Content="Podaci o naručiocu" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" BorderBrush="Black" VerticalAlignment="Top" Width="190"/>
+        <TextBox x:Name="imeInput" VerticalContentAlignment="Center" Text="{Binding narudzba.ime_narucioca, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}"  HorizontalAlignment="Left" Height="26" Width="190" Margin="10,41,0,0" TextWrapping="Wrap" BorderBrush="Black" VerticalAlignment="Top"/>
+        <TextBox x:Name="prezimeInput" VerticalContentAlignment="Center" Text="{Binding prezime_narucioca, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Height="26" Margin="10,90,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Black" Width="190" />
+        <TextBox x:Name="brTelInput" VerticalContentAlignment="Center" Text="{Binding broj_telefona_narucioca, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Height="26" Margin="10,142,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Black" Width="190"/>
+        <TextBox x:Name="firmaInput" VerticalContentAlignment="Center" Text="{Binding ime_firme, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Height="26" Margin="10,195,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Black" Width="190" />
+        <TextBox x:Name="adresaInput" VerticalContentAlignment="Center" Text="{Binding adresa_firme, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Height="26" Margin="10,244,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Black" Width="190" />
+        <TextBox x:Name="vrijemeIspInput" VerticalContentAlignment="Center" Text="{Binding ocekivano_vrijeme_isporuke, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Height="26" Margin="10,293,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Black" Width="190" />
         <Button x:Name="dalje" Click="daljeClick" VerticalContentAlignment="Center" Content="Dalje" HorizontalAlignment="Left" Foreground="White" Background="#0844A6"  Margin="209,293,0,0" VerticalAlignment="Top" Width="75" Height="26" Grid.Column="1"/>
         <Button x:Name="clear" Click="clearClick" VerticalContentAlignment="Center" Content="Očisti" HorizontalAlignment="Left" Margin="117,293,0,0" VerticalAlignment="Top" Width="75" Height="26" Grid.Column="1"/>
+        <DataGrid x:Name="narudzbaDataGrid" AutoGenerateColumns="False" Grid.ColumnSpan="2" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="222,10,10,119" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="ime_narucioca" Binding="{Binding narudzba.ime_narucioca}" Header="ime narucioca" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="prezime_narucioca" Binding="{Binding prezime_narucioca}" Header="prezime narucioca" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="broj_telefona_narucioca" Binding="{Binding broj_telefona_narucioca}" Header="broj telefona narucioca" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="ime_firme" Binding="{Binding ime_firme}" Header="ime firme" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="adresa_firme" Binding="{Binding adresa_firme}" Header="adresa firme" Width="SizeToHeader"/>
+                <DataGridTemplateColumn x:Name="ocekivano_vrijeme_isporuke" Header="ocekivano vrijeme isporuke" Width="SizeToHeader">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding ocekivano_vrijeme_isporuke, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </Window>
