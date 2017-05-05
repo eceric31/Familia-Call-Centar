@@ -11,17 +11,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Familia_Call_Centar.View;
 
-namespace Familia_Call_Centar.View
+namespace Familia_Call_Centar
 {
     /// <summary>
-    /// Interaction logic for FoodPicker.xaml
+    /// Interaction logic for Startup.xaml
     /// </summary>
-    public partial class FoodPicker : Window
+    public partial class Startup : Window
     {
-        public FoodPicker()
+        public Startup()
         {
             InitializeComponent();
+            MainFrame.Navigate(new Dashboard());
         }
     }
 }

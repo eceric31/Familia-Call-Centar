@@ -82,15 +82,32 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Startup.xaml.cs">
+      <DependentUpon>Startup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\Res.cs" />
+    <Compile Include="View\Dashboard.xaml.cs">
+      <DependentUpon>Dashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FoodPick.xaml.cs">
+      <DependentUpon>FoodPick.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OrderInfo.xaml.cs">
+      <DependentUpon>OrderInfo.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Startup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Dashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\FoodPicker.xaml">
+    <Page Include="View\FoodPick.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="OrderInfo.xaml">
+    <Page Include="View\OrderInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,15 +151,6 @@
     </Compile>
     <Compile Include="Model\voznja.cs">
       <DependentUpon>Familia.tt</DependentUpon>
-    </Compile>
-    <Compile Include="View\Dashboard.xaml.cs">
-      <DependentUpon>Dashboard.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\FoodPicker.xaml.cs">
-      <DependentUpon>FoodPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="OrderInfo.xaml.cs">
-      <DependentUpon>OrderInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

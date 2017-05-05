@@ -1,21 +1,15 @@
-﻿<Window
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Familia_Call_Centar"
-        xmlns:Model="clr-namespace:Familia_Call_Centar.Model" x:Class="Familia_Call_Centar.OrderInfo"
-        mc:Ignorable="d"
-        Title="OrderInfo" Height="360" Width="640" Loaded="Window_Loaded">
-    <Window.Resources>
-        <CollectionViewSource x:Key="narudzbaViewSource" d:DesignSource="{d:DesignInstance {x:Type Model:narudzba}, CreateList=True}"/>
-    </Window.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="85*"/>
-            <ColumnDefinition Width="73*"/>
-        </Grid.ColumnDefinitions>
-       
+﻿<Page x:Class="Familia_Call_Centar.View.OrderInfo"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Familia_Call_Centar.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="340" d:DesignWidth="640"
+      Title="OrderInfo">
+
+    <Grid Background="White" Height="340" VerticalAlignment="Top">
+
         <Frame x:Name="frame" Content="" HorizontalAlignment="Left" Height="309" BorderBrush="Black" BorderThickness="1" Background="LightGray" Opacity="0.5" Margin="10,10,0,0" VerticalAlignment="Top" Width="190"/>
         <Label x:Name="podaciONaruciocu" Content="Podaci o naručiocu" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" BorderBrush="Black" VerticalAlignment="Top" Width="190"/>
         <TextBox x:Name="imeInput" VerticalContentAlignment="Center" Text="{Binding narudzba.ime_narucioca, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}"  HorizontalAlignment="Left" Height="26" Width="190" Margin="10,41,0,0" TextWrapping="Wrap" BorderBrush="Black" VerticalAlignment="Top"/>
@@ -23,10 +17,10 @@
         <TextBox x:Name="brTelInput" VerticalContentAlignment="Center" Text="{Binding broj_telefona_narucioca, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Height="26" Margin="10,142,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Black" Width="190"/>
         <TextBox x:Name="firmaInput" VerticalContentAlignment="Center" Text="{Binding ime_firme, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Height="26" Margin="10,195,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Black" Width="190" />
         <TextBox x:Name="adresaInput" VerticalContentAlignment="Center" Text="{Binding adresa_firme, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Height="26" Margin="10,244,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Black" Width="190" />
-        <TextBox x:Name="vrijemeIspInput" VerticalContentAlignment="Center" Text="{Binding ocekivano_vrijeme_isporuke, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Height="26" Margin="10,293,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Black" Width="190" />
-        <Button x:Name="dalje" Click="daljeClick" VerticalContentAlignment="Center" Content="Dalje" HorizontalAlignment="Left" Foreground="White" Background="#0844A6"  Margin="209,293,0,0" VerticalAlignment="Top" Width="75" Height="26" Grid.Column="1"/>
-        <Button x:Name="clear" Click="clearClick" VerticalContentAlignment="Center" Content="Očisti" HorizontalAlignment="Left" Margin="117,293,0,0" VerticalAlignment="Top" Width="75" Height="26" Grid.Column="1"/>
-        <DataGrid x:Name="narudzbaDataGrid" AutoGenerateColumns="False" Grid.ColumnSpan="2" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="222,10,10,119" RowDetailsVisibilityMode="VisibleWhenSelected">
+        <DatePicker Name="vrijemeIspInput" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,295,0,0" Width="190"/>
+        <Button x:Name="dalje" Click="daljeClick" VerticalContentAlignment="Center" Content="Dalje" HorizontalAlignment="Left" Foreground="White" Background="#0844A6"  Margin="555,293,0,0" VerticalAlignment="Top" Width="75" Height="26"/>
+        <Button x:Name="clear" Click="clearClick" VerticalContentAlignment="Center" Content="Očisti" HorizontalAlignment="Left" Margin="458,293,0,0" VerticalAlignment="Top" Width="75" Height="26"/>
+        <DataGrid x:Name="narudzbaDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="245,10,10,119" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="ime_narucioca" Binding="{Binding narudzba.ime_narucioca}" Header="ime narucioca" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="prezime_narucioca" Binding="{Binding prezime_narucioca}" Header="prezime narucioca" Width="SizeToHeader"/>
@@ -42,6 +36,5 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
-</Window>
+</Page>

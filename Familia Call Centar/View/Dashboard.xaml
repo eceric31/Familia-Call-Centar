@@ -1,12 +1,23 @@
-﻿<Window x:Class="Familia_Call_Centar.View.Dashboard"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Familia_Call_Centar.View"
-        mc:Ignorable="d"
-        Title="Dashboard" Height="360" Width="640">
-    <Grid>
-        
+﻿<Page x:Class="Familia_Call_Centar.View.Dashboard"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Familia_Call_Centar.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="340" d:DesignWidth="640"
+      Title="Dashboard">
+
+    <Grid Background="White">
+        <StackPanel HorizontalAlignment="Left" Height="340" VerticalAlignment="Top" Width="100" Background="LightGray">
+            <Button x:Name="pocetnaButton" Content="Početna     >" Height="68"/>
+            <Button x:Name="jelovnikButton" Content="Jelovnik     >" Height="68"/>
+            <Button x:Name="narudzbeButton" Content="Narudžbe   >" Height="68"/>
+            <Button x:Name="dostaveButton" Content="Dostave     >" Height="68"/>
+            <Button x:Name="vozilaButton" Content="Jelovnik     >" Height="68"/>
+            <Button x:Name="vozacijButton" Content="Jelovnik    >" Height="68"/>
+        </StackPanel>
+        <Button x:Name="zaprimiNaruzbuButton" Content="Zaprimi novu narudžbu" Background="#0844A6" Foreground="White" HorizontalAlignment="Left" Margin="105,289,0,0" VerticalAlignment="Top" Width="151" Height="41" Click="zaprimiNaruzbuButton_Click"/>
+
     </Grid>
-</Window>
+</Page>
