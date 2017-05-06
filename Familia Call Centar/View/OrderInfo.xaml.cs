@@ -14,6 +14,9 @@ namespace Familia_Call_Centar.View
     /// </summary>
     public partial class OrderInfo : Page
     {
+        String ime, prezime, brTel, firma, adresa;
+        bool dataRowSelected = false;
+
         narudzba narudzba;
         FamiliaContextClass db;
         DBHandler handler;
@@ -35,16 +38,27 @@ namespace Familia_Call_Centar.View
 
         private void daljeClick(object sender, RoutedEventArgs e)
         {
-            if (String.IsNullOrEmpty(imeInput.Text) || String.IsNullOrEmpty(prezimeInput.Text) ||
-               String.IsNullOrEmpty(brTelInput.Text) || String.IsNullOrEmpty(firmaInput.Text) ||
-               String.IsNullOrEmpty(adresaInput.Text))
+            if (!dataRowSelected)
             {
-                MessageBoxResult box = MessageBox.Show("Molimo unesite sve parametre!");
+                if (String.IsNullOrEmpty(imeInput.Text) || String.IsNullOrEmpty(prezimeInput.Text) ||
+                   String.IsNullOrEmpty(brTelInput.Text) || String.IsNullOrEmpty(firmaInput.Text) ||
+                   String.IsNullOrEmpty(adresaInput.Text))
+                {
+                    MessageBoxResult box = MessageBox.Show("Molimo unesite sve parametre!");
+                }
+                else
+                {
+                    narudzba = new narudzba(imeInput.Text, prezimeInput.Text, brTelInput.Text, firmaInput.Text, adresaInput.Text, (DateTime)vrijemeIspInput.SelectedDate);
+                    saveOrder();
+                    Page foodPicker = new FoodPick(narudzba.narudzbaID);
+                    NavigationService.Navigate(foodPicker);
+                }
             }
             else
             {
-                narudzba = new narudzba(imeInput.Text, prezimeInput.Text, brTelInput.Text, firmaInput.Text, adresaInput.Text, (DateTime)vrijemeIspInput.SelectedDate);
+                narudzba = new narudzba(ime, prezime, brTel, firma, adresa, (DateTime)vrijemeIspInput.SelectedDate);
                 saveOrder();
+                dataRowSelected = false;
                 Page foodPicker = new FoodPick(narudzba.narudzbaID);
                 NavigationService.Navigate(foodPicker);
             }
@@ -85,6 +99,22 @@ namespace Familia_Call_Centar.View
             brTelInput.Clear();
             firmaInput.Clear();
             adresaInput.Clear();
+        }
+
+        private void narudzbaDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataTable table = new DataTable();
+            table = ((DataView)narudzbaDataGrid.ItemsSource).ToTable();
+            var dg = sender as DataGrid;
+            var index = dg.SelectedIndex;
+
+            ime = table.Rows[index][0].ToString();
+            prezime = table.Rows[index][1].ToString();
+            brTel = table.Rows[index][2].ToString();
+            firma = table.Rows[index][3].ToString();
+            adresa = table.Rows[index][4].ToString();
+            dataRowSelected = true;
+            MessageBox.Show("Molimo unesite očekivano vrijeme isporuke");
         }
     }
 }

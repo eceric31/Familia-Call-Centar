@@ -84,7 +84,7 @@ namespace Familia_Call_Centar.Utilities
             try
             {
                 connection.Open();
-                String statement = "SELECT ime_narucioca, prezime_narucioca, broj_telefona_narucioca, " +
+                String statement = "SELECT DISTINCT ime_narucioca, prezime_narucioca, broj_telefona_narucioca, " +
                     "ime_firme, adresa_firme FROM testna.narudzba order by ocekivano_vrijeme_isporuke desc";
                 MySqlCommand cmd = new MySqlCommand(statement, connection);
                 using(MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))

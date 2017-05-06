@@ -26,7 +26,7 @@
         <DatePicker x:Name="vrijemeIspInput" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,295,0,0" Width="190"/>
         <Button x:Name="dalje" Click="daljeClick" VerticalContentAlignment="Center" Content="Dalje" HorizontalAlignment="Left" Foreground="White" Background="#0844A6"  Margin="555,293,0,0" VerticalAlignment="Top" Width="75" Height="26"/>
         <Button x:Name="clear" Click="clearClick" VerticalContentAlignment="Center" Content="Očisti" HorizontalAlignment="Left" Margin="458,293,0,0" VerticalAlignment="Top" Width="75" Height="26"/>
-        <DataGrid x:Name="narudzbaDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="230,10,10,130" RowDetailsVisibilityMode="VisibleWhenSelected">
+        <DataGrid x:Name="narudzbaDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="231,10,9,130" RowDetailsVisibilityMode="VisibleWhenSelected" DataContext="{Binding /}" HorizontalAlignment="Center" SelectionChanged="narudzbaDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="ime_naruciocaColumn" Binding="{Binding ime_narucioca}" Header="Ime naručioca" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="prezime_naruciocaColumn" Binding="{Binding prezime_narucioca}" Header="Prezime naručioca" Width="SizeToHeader"/>
