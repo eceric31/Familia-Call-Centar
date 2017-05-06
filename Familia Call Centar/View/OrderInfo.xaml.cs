@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Familia_Call_Centar.Model;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace Familia_Call_Centar.View
 {
@@ -29,6 +30,7 @@ namespace Familia_Call_Centar.View
         {
             InitializeComponent();
             vrijemeIspInput.Text = DateTime.Now.ToString();
+            narudzba = new narudzba();
             db = new FamiliaContextClass();
         }
 
@@ -47,13 +49,15 @@ namespace Familia_Call_Centar.View
             }
             else
             {
-                narudzba = new narudzba();
                 narudzba.ime_narucioca = imeInput.Text;
                 narudzba.prezime_narucioca = prezimeInput.Text;
                 narudzba.broj_telefona_narucioca = brTelInput.Text;
                 narudzba.ime_firme = firmaInput.Text;
                 narudzba.adresa_firme = adresaInput.Text;
                 narudzba.ocekivano_vrijeme_isporuke = (DateTime)vrijemeIspInput.SelectedDate;
+                //ovo je id testnog entrya, tako da svaka narudzba koja nije isporucena ce imati ovaj id, sve dok se 
+                //ne kreira nova voznja
+                narudzba.voznjaID = 2;
                 saveOrder();
                 Page foodPicker = new FoodPick(narudzba.narudzbaID);
                 NavigationService.Navigate(foodPicker);
@@ -65,11 +69,26 @@ namespace Familia_Call_Centar.View
             db.narudzba.Add(narudzba);
             try
             {
-                db.SaveChanges();
+                //db.SaveChanges();
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException e)
             {
                 Console.WriteLine(e.StackTrace);
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Debug.WriteLine(@"Entity of type " + eve.Entry.Entity.GetType().Name
+                        + " in state " + eve.Entry.State + " has the following validation errors: ");
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
             }
         }
 

@@ -34,12 +34,9 @@ namespace Familia_Call_Centar.View
             narudzbaID = nID;
             item = new narudzba_item();
             db = new FamiliaContextClass();
-
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            addGrahImage(bitmap);
-            addKobasiceImage(bitmap);
-            bitmap.EndInit();
+            
+            addGrahImage();
+            addKobasiceImage();
 
             loadJela();
 
@@ -59,7 +56,6 @@ namespace Familia_Call_Centar.View
                 jelo1.Content = j.naziv;
                 jelo1Kolicina.Content = kolicina1.Text;
                 db.narudzba_item.Add(item);
-                db.SaveChanges();
             }
             if (!String.IsNullOrEmpty(kolicina2.Text))
             {
@@ -71,22 +67,29 @@ namespace Familia_Call_Centar.View
                 jelo2.Content = j.naziv;
                 jelo2Kolicina.Content = kolicina2.Text;
                 db.narudzba_item.Add(item);
-                db.SaveChanges();
             }
+
+            db.SaveChanges();
             //i tako dalje
             //vidjeti kako za ovaj infinite scroll
         } 
 
-        private void addGrahImage(BitmapImage bitmap)
+        private void addGrahImage()
         {
-            bitmap.UriSource = new Uri(Res.grahUri, UriKind.Absolute);
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(Res.grahUri, UriKind.RelativeOrAbsolute);
             slika1.Source = bitmap;
+            bitmap.EndInit();
         }
 
-        private void addKobasiceImage(BitmapImage bitmap)
+        private void addKobasiceImage()
         {
-            bitmap.UriSource = new Uri(Res.kobasiceUri, UriKind.Absolute);
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(Res.kobasiceUri, UriKind.RelativeOrAbsolute);
             slika2.Source = bitmap;
+            bitmap.EndInit();
         }
 
         private void loadJela()

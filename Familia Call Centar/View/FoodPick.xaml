@@ -41,7 +41,7 @@
                 <Label x:Name="jelo3Kolicina" Content="Količina3" HorizontalAlignment="Left" Margin="57.673,92,0,0" VerticalAlignment="Top"/>
             </Grid>
         </ScrollViewer>
-        <Button x:Name="button" Content="Spasi" Background="#0844A6" Foreground="White" HorizontalAlignment="Right" Margin="0,0,27,21" VerticalAlignment="Bottom" Width="75" Height="26" Click="button_Click"/>
+        <Button x:Name="button" Content="Spasi" Background="#0844A6" Foreground="White" HorizontalAlignment="Left" Margin="538,293,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="button_Click"/>
         <Button x:Name="clear" Content="Očisti" HorizontalAlignment="Left" Margin="442,293,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="clear_Click"/>
 
     </Grid>
