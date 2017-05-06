@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Familia_Call_Centar.Model;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Data;
+using Familia_Call_Centar.Utilities;
 
 namespace Familia_Call_Centar.View
 {
@@ -26,12 +16,16 @@ namespace Familia_Call_Centar.View
     {
         narudzba narudzba;
         FamiliaContextClass db;
+        DBHandler handler;
         public OrderInfo()
         {
             InitializeComponent();
             vrijemeIspInput.Text = DateTime.Now.ToString();
-            narudzba = new narudzba();
             db = new FamiliaContextClass();
+            handler = new DBHandler();
+
+            DataTable table = handler.fillDataTable();
+            narudzbaDataGrid.DataContext = table.DefaultView;
         }
 
         private void clearClick(object sender, RoutedEventArgs e)
@@ -49,15 +43,7 @@ namespace Familia_Call_Centar.View
             }
             else
             {
-                narudzba.ime_narucioca = imeInput.Text;
-                narudzba.prezime_narucioca = prezimeInput.Text;
-                narudzba.broj_telefona_narucioca = brTelInput.Text;
-                narudzba.ime_firme = firmaInput.Text;
-                narudzba.adresa_firme = adresaInput.Text;
-                narudzba.ocekivano_vrijeme_isporuke = (DateTime)vrijemeIspInput.SelectedDate;
-                //ovo je id testnog entrya, tako da svaka narudzba koja nije isporucena ce imati ovaj id, sve dok se 
-                //ne kreira nova voznja
-                narudzba.voznjaID = 2;
+                narudzba = new narudzba(imeInput.Text, prezimeInput.Text, brTelInput.Text, firmaInput.Text, adresaInput.Text, (DateTime)vrijemeIspInput.SelectedDate);
                 saveOrder();
                 Page foodPicker = new FoodPick(narudzba.narudzbaID);
                 NavigationService.Navigate(foodPicker);
@@ -69,7 +55,7 @@ namespace Familia_Call_Centar.View
             db.narudzba.Add(narudzba);
             try
             {
-                //db.SaveChanges();
+                db.SaveChanges();
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException e)
             {

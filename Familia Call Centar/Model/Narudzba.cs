@@ -15,9 +15,17 @@ namespace Familia_Call_Centar.Model
     public partial class narudzba
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public narudzba()
+        public narudzba(string ime, string prezime, string br_tel, string firma, string adresa, DateTime ocekivano_vrijeme)
         {
             this.narudzba_item = new ObservableCollection<narudzba_item>();
+            ime_narucioca = ime;
+            prezime_narucioca = prezime;
+            broj_telefona_narucioca = br_tel;
+            ime_firme = firma;
+            adresa_firme = adresa;
+            ocekivano_vrijeme_isporuke = ocekivano_vrijeme;
+            //po defaultu
+            voznjaID = 2;
         }
     
         public int narudzbaID { get; set; }

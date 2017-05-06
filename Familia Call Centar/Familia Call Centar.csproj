@@ -85,6 +85,7 @@
     <Compile Include="Startup.xaml.cs">
       <DependentUpon>Startup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\DBHandler.cs" />
     <Compile Include="Utilities\Res.cs" />
     <Compile Include="View\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
@@ -177,7 +178,15 @@
       <DependentUpon>Familia.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Familia_Call_Centar.Model.checkpoint.datasource" />
+    <None Include="Properties\DataSources\Familia_Call_Centar.Model.FamiliaContextClass.datasource" />
+    <None Include="Properties\DataSources\Familia_Call_Centar.Model.jelo.datasource" />
+    <None Include="Properties\DataSources\Familia_Call_Centar.Model.lokacija.datasource" />
     <None Include="Properties\DataSources\Familia_Call_Centar.Model.narudzba.datasource" />
+    <None Include="Properties\DataSources\Familia_Call_Centar.Model.narudzba_item.datasource" />
+    <None Include="Properties\DataSources\Familia_Call_Centar.Model.vozac.datasource" />
+    <None Include="Properties\DataSources\Familia_Call_Centar.Model.vozilo.datasource" />
+    <None Include="Properties\DataSources\Familia_Call_Centar.Model.voznja.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -199,6 +208,7 @@
       <DependentUpon>Familia.edmx</DependentUpon>
       <LastGenOutput>Familia.cs</LastGenOutput>
     </Content>
+    <Resource Include="Slike jela\sarma.jpg" />
     <Resource Include="Slike jela\grah.jpg" />
     <Resource Include="Slike jela\kobasice.jpg" />
   </ItemGroup>

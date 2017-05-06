@@ -14,6 +14,14 @@ namespace Familia_Call_Centar.Model
     
     public partial class narudzba_item
     {
+        public narudzba_item(int kvantitet, Double ukupna_cijena, int jeloID, int narudzbaID) 
+        {
+            this.kvantitet = kvantitet;
+            this.ukupna_cijena = ukupna_cijena;
+            this.jeloID = jeloID;
+            this.narudzbaID = narudzbaID;
+        }
+
         public int narudzba_itemID { get; set; }
         public int kvantitet { get; set; }
         public Nullable<double> ukupna_cijena { get; set; }
