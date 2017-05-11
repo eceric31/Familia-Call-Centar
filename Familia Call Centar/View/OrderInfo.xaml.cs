@@ -6,6 +6,7 @@ using Familia_Call_Centar.Model;
 using System.Diagnostics;
 using System.Data;
 using Familia_Call_Centar.Utilities;
+using System.Globalization;
 
 namespace Familia_Call_Centar.View
 {
@@ -23,7 +24,9 @@ namespace Familia_Call_Centar.View
         public OrderInfo()
         {
             InitializeComponent();
-            vrijemeIspInput.Text = DateTime.Now.ToString();
+            String date = DateTime.Now.Day.ToString() + "/" + DateTime.Now.Month.ToString() + "/" +
+                DateTime.Now.Year.ToString();
+            vrijemeIspInput.Text = date;
             db = new FamiliaContextClass();
             handler = new DBHandler();
 
@@ -48,28 +51,42 @@ namespace Familia_Call_Centar.View
                 }
                 else
                 {
-                    narudzba = new narudzba(imeInput.Text, prezimeInput.Text, brTelInput.Text, firmaInput.Text, adresaInput.Text, (DateTime)vrijemeIspInput.SelectedDate);
-                    saveOrder();
-                    Page foodPicker = new FoodPick(narudzba.narudzbaID);
-                    NavigationService.Navigate(foodPicker);
+                    save();
                 }
             }
             else
             {
-                narudzba = new narudzba(ime, prezime, brTel, firma, adresa, (DateTime)vrijemeIspInput.SelectedDate);
-                saveOrder();
-                dataRowSelected = false;
-                Page foodPicker = new FoodPick(narudzba.narudzbaID);
-                NavigationService.Navigate(foodPicker);
+                save();
             }
         }
 
-        public void saveOrder()
+        private void save()
+        {
+            if(dataRowSelected)
+            {
+                //ovdje se baca exception
+                narudzba = new narudzba(ime, prezime, brTel, firma, adresa, getDateTime());
+                dataRowSelected = false;
+            }
+            else
+            {
+                //a i ovdje
+                narudzba = new narudzba(imeInput.Text, prezimeInput.Text, brTelInput.Text, firmaInput.Text, adresaInput.Text,
+                    getDateTime());
+                
+            }
+            saveOrder();
+            Page foodPicker = new FoodPick(narudzba.narudzbaID);
+            NavigationService.Navigate(foodPicker);
+        }
+
+        private void saveOrder()
         {
             db.narudzba.Add(narudzba);
             try
             {
                 db.SaveChanges();
+                handler.updateOcekivanoVrijemeIsporuke(getDateTime(), narudzba.narudzbaID);
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException e)
             {
@@ -115,6 +132,17 @@ namespace Familia_Call_Centar.View
             adresa = table.Rows[index][4].ToString();
             dataRowSelected = true;
             MessageBox.Show("Molimo unesite očekivano vrijeme isporuke");
+        }
+
+        private DateTime getDateTime()
+        {
+            //pazi exception
+            String time = vrijemeIspInput.Text;
+            string[] dateTimeSplit = time.Split();
+            string[] timeSplit = dateTimeSplit[1].Split(':');
+            int hours = Convert.ToInt32(timeSplit[0]);
+            int minutes = Convert.ToInt32(timeSplit[1]);
+            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0, DateTimeKind.Unspecified);
         }
     }
 }

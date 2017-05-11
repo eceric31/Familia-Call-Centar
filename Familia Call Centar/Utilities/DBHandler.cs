@@ -103,5 +103,54 @@ namespace Familia_Call_Centar.Utilities
             }
             return table;
         }
+
+        public DataTable fillDataTableNewOrders()
+        {
+            DataTable table = new DataTable();
+            try
+            {
+                connection.Open();
+                String statement = "SELECT ime_narucioca, prezime_narucioca, broj_telefona_narucioca, " +
+                    "ime_firme, adresa_firme, ocekivano_vrijeme_isporuke FROM testna.narudzba where voznjaID = 2 order by ocekivano_vrijeme_isporuke desc";
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                {
+                    adapter.Fill(table);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return table;
+        }
+
+        public void updateOcekivanoVrijemeIsporuke(DateTime ocekVrijeme, int narudzbaID)
+        {
+            try
+            {
+                connection.Open();
+                String statement = "UPDATE testna.narudzba SET ocekivano_vrijeme_isporuke = (@1)"
+                    + " where narudzbaID = " + narudzbaID;
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.Parameters.AddWithValue("@1", ocekVrijeme);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }

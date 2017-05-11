@@ -93,8 +93,14 @@
     <Compile Include="View\FoodPick.xaml.cs">
       <DependentUpon>FoodPick.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\NewDelivery.xaml.cs">
+      <DependentUpon>NewDelivery.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OrderInfo.xaml.cs">
       <DependentUpon>OrderInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TransportPick.xaml.cs">
+      <DependentUpon>TransportPick.xaml</DependentUpon>
     </Compile>
     <Page Include="Startup.xaml">
       <SubType>Designer</SubType>
@@ -108,7 +114,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\NewDelivery.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\OrderInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TransportPick.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

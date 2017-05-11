@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Familia_Call_Centar"
         mc:Ignorable="d"
-        Title="Startup" Height="340" Width="640">
+        Title="Startup" Height="360" Width="640">
     <Grid>
         <Frame Name="MainFrame" NavigationUIVisibility="Hidden" >
         </Frame>

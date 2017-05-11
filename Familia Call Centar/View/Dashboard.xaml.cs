@@ -26,5 +26,17 @@ namespace Familia_Call_Centar.View
                 Console.WriteLine(ex.StackTrace);
             }
         }
+
+        private void pokreniDostavu_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                NavigationService.Navigate(new Uri("/View/NewDelivery.xaml", UriKind.RelativeOrAbsolute));
+            }
+            catch (UriFormatException ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+        }
     }
 }

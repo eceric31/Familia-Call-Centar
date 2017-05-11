@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Familia_Call_Centar.View"
       xmlns:Model="clr-namespace:Familia_Call_Centar.Model" x:Class="Familia_Call_Centar.View.OrderInfo"
       mc:Ignorable="d" 
-      d:DesignHeight="340" d:DesignWidth="640"
+      d:DesignHeight="360" d:DesignWidth="640"
       Title="OrderInfo">
 
     <Page.Resources>
@@ -23,7 +23,7 @@
         <TextBox x:Name="brTelInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="10,142,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Black" Width="190"/>
         <TextBox x:Name="firmaInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="10,195,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Black" Width="190" />
         <TextBox x:Name="adresaInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="10,244,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" BorderBrush="Black" Width="190" />
-        <DatePicker x:Name="vrijemeIspInput" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,295,0,0" Width="190"/>
+        <TextBox x:Name="vrijemeIspInput" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,295,0,0" Width="190" Height="24" TextWrapping="Wrap" BorderBrush="Black"/>
         <Button x:Name="dalje" Click="daljeClick" VerticalContentAlignment="Center" Content="Dalje" HorizontalAlignment="Left" Foreground="White" Background="#0844A6"  Margin="555,293,0,0" VerticalAlignment="Top" Width="75" Height="26"/>
         <Button x:Name="clear" Click="clearClick" VerticalContentAlignment="Center" Content="Očisti" HorizontalAlignment="Left" Margin="458,293,0,0" VerticalAlignment="Top" Width="75" Height="26"/>
         <DataGrid x:Name="narudzbaDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="231,10,9,130" RowDetailsVisibilityMode="VisibleWhenSelected" DataContext="{Binding /}" HorizontalAlignment="Center" SelectionChanged="narudzbaDataGrid_SelectionChanged">

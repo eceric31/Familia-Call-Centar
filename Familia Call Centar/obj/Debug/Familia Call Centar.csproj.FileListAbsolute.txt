@@ -26,3 +26,5 @@ C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia 
 C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\Familia Call Centar.exe
 C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\Familia Call Centar.pdb
 C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\Familia Call Centar.csprojResolveAssemblyReference.cache
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\View\NewDelivery.g.cs
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\View\NewDelivery.baml
