@@ -58,9 +58,14 @@ namespace Familia_Call_Centar.View
             }
             else
             {
-                service.Narudzbe = isporukaTable;
                 service.IdVozila = handler.getVoziloID(selectedTransport);
                 service.TipVozila = selectedTransport;
+
+                service.Narudzbe = isporukaTable;
+                service.Narudzbe.Merge(handler.getOrderIDs());
+
+                service.Jela = handler.fillDataTableMeals();
+                
                 //trebaju jos narudzba_itemsi
                 Page dash = new Dashboard(service);
                 NavigationService.Navigate(dash);

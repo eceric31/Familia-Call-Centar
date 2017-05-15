@@ -23,21 +23,8 @@
             <RowDefinition Height="*" MinHeight="60"/>
         </Grid.RowDefinitions>
 
-        <DataGrid x:Name="narudzbaDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="31,41,30,2" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="False" Grid.Row="0" SelectionChanged="narudzbaDataGrid_SelectionChanged">
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="ime_naruciocaColumn" Width="SizeToHeader" Header="Ime naručioca" Binding="{Binding ime_narucioca}"/>
-                <DataGridTextColumn x:Name="prezime_naruciocaColumn" Width="SizeToHeader" Header="Prezime naručioca" Binding="{Binding prezime_narucioca}"/>
-                <DataGridTextColumn x:Name="broj_telefona_naruciocaColumn" Width="SizeToHeader" Header="Broj telefona" Binding="{Binding broj_telefona_narucioca}"/>
-                <DataGridTextColumn x:Name="ime_firmeColumn" Width="SizeToHeader" Header="Naziv firme" Binding="{Binding ime_firme}"/>
-                <DataGridTextColumn x:Name="adresa_firmeColumn" Width="SizeToHeader" Header="Adresa firme" Binding="{Binding adresa_firme}"/>
-                <DataGridTemplateColumn x:Name="ocekivano_vrijeme_isporukeColumn" Width="SizeToHeader" Header="Očekivano vrijeme isporuke">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <DatePicker SelectedDate="{Binding ocekivano_vrijeme_isporuke, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
+        <DataGrid x:Name="narudzbaDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="31,41,30,2" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="True" Grid.Row="0" SelectionChanged="narudzbaDataGrid_SelectionChanged">
+            
         </DataGrid>
 
         <Button x:Name="daljeButton" Content="Dalje" HorizontalAlignment="Right" Margin="0,18,30,0" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" MinWidth="75" MinHeight="26" Foreground="White" Background="#0844A6" Click="daljeButton_Click"/>
@@ -47,7 +34,7 @@
         <Label x:Name="label" Content="Primljene narudžbe" HorizontalAlignment="Left" Margin="31,10,0,0" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0"/>
         <Label x:Name="label1" Content="Narudžbe za dostavu" HorizontalAlignment="Left" Margin="31,7,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0"/>
 
-        <DataGrid x:Name="isporukaDataGrid"  HorizontalAlignment="Left" ItemsSource="{Binding}" VerticalAlignment="Top" Margin="31,38,0,0" Grid.Row="1" MinHeight="105" MinWidth="579" AutoGenerateColumns="True">
+        <DataGrid x:Name="isporukaDataGrid"  HorizontalAlignment="Left" ItemsSource="{Binding}" VerticalAlignment="Top" Margin="31,38,0,0" Grid.Row="1" MinHeight="105" MinWidth="579" AutoGenerateColumns="True" Width="579">
         </DataGrid>
     </Grid>
 </Page>

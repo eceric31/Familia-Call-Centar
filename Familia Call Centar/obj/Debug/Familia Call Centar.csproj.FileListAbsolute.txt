@@ -30,3 +30,5 @@ C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia 
 C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\View\NewDelivery.baml
 C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\View\TransportPick.g.cs
 C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\obj\Debug\View\TransportPick.baml
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\bin\Debug\Newtonsoft.Json.xml

@@ -114,8 +114,14 @@ namespace Familia_Call_Centar.Utilities
             try
             {
                 connection.Open();
-                String statement = "SELECT ime_narucioca, prezime_narucioca, broj_telefona_narucioca, " +
-                    "ime_firme, adresa_firme, ocekivano_vrijeme_isporuke FROM testna.narudzba where voznjaID = 2 order by ocekivano_vrijeme_isporuke desc";
+                String statement = "select n.ime_narucioca, n.prezime_narucioca, n.broj_telefona_narucioca, " +
+                                   "n.adresa_firme, n.ime_firme, n.ocekivano_vrijeme_isporuke, " +
+                                   "sum(n_i.ukupna_cijena) " +
+                                   "from narudzba n, narudzba_item n_i " +
+                                   "where n.narudzbaID = n_i.narudzbaID and n.voznjaID = 2 " +
+                                   "group by n_i.narudzbaID " +
+                                   "order by n.adresa_firme, n.ocekivano_vrijeme_isporuke desc";
+
                 MySqlCommand cmd = new MySqlCommand(statement, connection);
                 using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
                 {
@@ -318,6 +324,66 @@ namespace Familia_Call_Centar.Utilities
                 connection.Close();
             }
             return idVozila;
+        }
+
+        public DataTable getOrderIDs()
+        {
+            DataTable column = new DataTable();
+            try
+            {
+                connection.Open();
+                String statement = "select narudzbaID from narudzba " +
+                    "where voznjaID = 2 order by adresa_firme, ocekivano_vrijeme_isporuke desc";
+
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                {
+                    adapter.Fill(column);
+                }
+                cmd.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            column.Columns[0].ColumnName = "narudzbaID";
+            return column;
+        }
+
+        public DataTable fillDataTableMeals()
+        {
+            DataTable table = new DataTable();
+            try
+            {
+                connection.Open();
+                String statement = "select j.naziv, n_i.kvantitet, n.narudzbaID " +
+                                   "from jelo j, narudzba n, narudzba_item n_i " +
+                                   "where n.narudzbaID = n_i.narudzbaID and j.jeloID = n_i.jeloID and n.voznjaID = 2 " +
+                                   "group by n_i.narudzbaID, n_i.jeloID " +
+                                   "order by n.adresa_firme, n.ocekivano_vrijeme_isporuke desc";
+
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                {
+                    adapter.Fill(table);
+                }
+                cmd.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return table;
         }
     }
 }

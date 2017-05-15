@@ -3,6 +3,7 @@ using Familia_Call_Centar.View;
 using Familia_Call_Centar.Utilities;
 using System;
 using Familia_Call_Centar.Servis;
+using System.Threading;
 
 namespace Familia_Call_Centar
 {
@@ -15,6 +16,7 @@ namespace Familia_Call_Centar
         {
             InitializeComponent();
             Service service = new Service();
+            Thread th = new Thread(new ThreadStart(service.listen));
             MainFrame.Navigate(new Dashboard(service));
         }
     }

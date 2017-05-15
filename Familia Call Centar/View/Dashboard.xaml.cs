@@ -12,6 +12,12 @@ namespace Familia_Call_Centar.View
     public partial class Dashboard : Page
     {
         Service service;
+
+        public Dashboard()
+        {
+            InitializeComponent();
+        }
+
         public Dashboard(Service service)
         {
             InitializeComponent();

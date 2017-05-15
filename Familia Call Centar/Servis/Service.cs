@@ -16,6 +16,7 @@ namespace Familia_Call_Centar.Servis
         DBHandler handler;
         HttpListener listener;
         DataTable narudzbe;
+        DataTable jela;
 
         int idVozila;
         String tipVozila;
@@ -25,14 +26,14 @@ namespace Familia_Call_Centar.Servis
             handler = new DBHandler();
             listener = new HttpListener();
             Narudzbe = new DataTable();
-
-            listener.Start();
-            listen();
+            Jela = new DataTable();
         }
 
-        private async void listen()
+        public async void listen()
         {
-            while(true)
+            listener.Start();
+            listen();
+            while (true)
             {
                 HttpListenerContext context = await listener.GetContextAsync();
                 String reqData = getRequestData(context);
@@ -59,11 +60,9 @@ namespace Familia_Call_Centar.Servis
             
             //read header
             NameValueCollection headers = ctx.Request.Headers;
-            List<String> keys = new List<String>();
             List<String> values = new List<String>();
             for (int i = 0; i < headers.Count; i++)
             {
-                keys.Add(headers.GetKey(i));
                 values.Add(headers.Get(headers.GetKey(i)));
             }
 
@@ -111,7 +110,17 @@ namespace Familia_Call_Centar.Servis
 
         private async void handleIsporuka(HttpListenerContext ctx)
         {
-
+            try
+            {
+                var output = ctx.Response.OutputStream;
+                byte[] json = Encoding.ASCII.GetBytes(toJson());
+                await output.WriteAsync(json, 0, json.Length);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
         }
 
         public DataTable Narudzbe
@@ -151,6 +160,54 @@ namespace Familia_Call_Centar.Servis
             {
                 tipVozila = value;
             }
+        }
+
+        public DataTable Jela
+        {
+            get
+            {
+                return jela;
+            }
+
+            set
+            {
+                jela = value;
+            }
+        }
+        
+        private String toJson()
+        {
+            StringBuilder json = new StringBuilder();
+
+            json.Append("{\n");
+            json.Append("\"id_vozila\": \"" + idVozila.ToString());
+            json.Append(",\n\"tip_vozila\": \"" + tipVozila);
+            json.Append(",\n\"narudzbe\": [\n");
+
+            for (int i = 0; i < narudzbe.Rows.Count; i++)
+            {
+                json.Append("{\n");
+                json.Append("\"id_narudzbe\": \"" + narudzbe.Rows[i][7].ToString() + "\",\n");
+                json.Append("\"ime_narucioca\": \"" + narudzbe.Rows[i][0].ToString() + "\",\n");
+                json.Append("\"prezime_narucioca\": \"" + narudzbe.Rows[i][1].ToString() + "\",\n");
+                json.Append("\"broj_telefona\": \"" + narudzbe.Rows[i][2].ToString() + "\",\n");
+                json.Append("\"firma\": \"" + narudzbe.Rows[i][3].ToString() + "\",\n");
+                json.Append("\"adresa\": \"" + narudzbe.Rows[i][4].ToString() + "\",\n");
+                json.Append("\"ocekivano_vrijeme_isporuke\": \"" + narudzbe.Rows[i][5].ToString() + "\",\n");
+                json.Append("\"jela\":[\n");
+                for (int j = 0; j < jela.Rows.Count; j++)
+                {
+                    json.Append("{\n");
+                    json.Append("\"naziv_jela\": \"" + jela.Rows[j][0].ToString()+ "\",\n");
+                    json.Append("\"kvantitet\": \"" + jela.Rows[j][1].ToString() + "\"\n");
+                    if (j == jela.Rows.Count - 1) json.Append("}\n");
+                    else json.Append("},\n");
+                }
+                if(i != narudzbe.Rows.Count - 1) json.Append("],\n\"cijena\": \"" + narudzbe.Rows[i][6].ToString() + "\"\n},");
+                else json.Append("],\n\"cijena\": \"" + narudzbe.Rows[i][6].ToString() + "\"\n}\n]\n}");
+            }
+            Console.WriteLine(json);
+            return json.ToString();
         }
     }
 }

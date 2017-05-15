@@ -30,6 +30,13 @@ namespace Familia_Call_Centar.View
             isporukaTable = new DataTable();
 
             narudzbeTable = handler.fillDataTableNewOrders();
+            narudzbeTable.Columns[0].ColumnName = "Ime naručioca";
+            narudzbeTable.Columns[1].ColumnName = "Prezime naručioca";
+            narudzbeTable.Columns[2].ColumnName = "Broj telefona";
+            narudzbeTable.Columns[3].ColumnName = "Naziv firme";
+            narudzbeTable.Columns[4].ColumnName = "Adresa firme";
+            narudzbeTable.Columns[5].ColumnName = "Očekivano vrijeme isporuke";
+            narudzbeTable.Columns[6].ColumnName = "Ukupna cijena";
             narudzbaDataGrid.DataContext = narudzbeTable.DefaultView;
 
             isporukaTable.Columns.Add("Ime naručioca", typeof(string));
@@ -38,6 +45,7 @@ namespace Familia_Call_Centar.View
             isporukaTable.Columns.Add("Naziv firme", typeof(string));
             isporukaTable.Columns.Add("Adresa firme", typeof(string));
             isporukaTable.Columns.Add("Očekivano vrijeme isporuke", typeof(string));
+            isporukaTable.Columns.Add("Ukupna cijena", typeof(string));
         }
 
         private void narudzbaDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -72,6 +80,7 @@ namespace Familia_Call_Centar.View
                 row["Naziv firme"] = narudzbeTable.Rows[index][3].ToString();
                 row["Adresa firme"] = narudzbeTable.Rows[index][4].ToString();
                 row["Očekivano vrijeme isporuke"] = narudzbeTable.Rows[index][5].ToString();
+                row["Ukupna cijena"] = narudzbeTable.Rows[index][6].ToString();
                 isporukaTable.Rows.Add(row);
             }
             catch (Exception ex)
