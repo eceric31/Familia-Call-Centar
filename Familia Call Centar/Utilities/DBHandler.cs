@@ -33,6 +33,7 @@ namespace Familia_Call_Centar.Utilities
                     jela.Add(new jelo(Convert.ToInt32(reader["jeloID"]), reader["naziv"].ToString(), reader["opis"].ToString(),
                         reader["tip_jela"].ToString(), Convert.ToDouble(reader["cijena"])));
                 }
+                reader.Dispose();
             }
             catch(Exception ex)
             {
@@ -65,6 +66,8 @@ namespace Familia_Call_Centar.Utilities
                         reader["adresa_firme"].ToString(), DateTime.Now));
                     //ocekivano vrijeme isporuke ionako ne treba ni za sta
                 }
+
+                reader.Dispose();
             }
             catch (Exception ex)
             {
@@ -91,6 +94,7 @@ namespace Familia_Call_Centar.Utilities
                 {
                     adapter.Fill(table);
                 }
+                cmd.Dispose();
             }
             catch (Exception ex)
             {
@@ -117,6 +121,7 @@ namespace Familia_Call_Centar.Utilities
                 {
                     adapter.Fill(table);
                 }
+                cmd.Dispose();
             }
             catch (Exception ex)
             {
@@ -141,6 +146,7 @@ namespace Familia_Call_Centar.Utilities
                 cmd.CommandType = System.Data.CommandType.Text;
                 cmd.Parameters.AddWithValue("@1", ocekVrijeme);
                 cmd.ExecuteNonQuery();
+                cmd.Dispose();
             }
             catch (Exception ex)
             {
@@ -151,6 +157,167 @@ namespace Familia_Call_Centar.Utilities
             {
                 connection.Close();
             }
+        }
+
+        public void loadJelaUrls()
+        {
+            List<String> jelaUrls = new List<string>();
+            try
+            {
+                connection.Open();
+                String statement = "SELECT url_slike_jela FROM testna.jelo";
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                cmd.CommandType = System.Data.CommandType.Text;
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    jelaUrls.Add(reader["url_slike_jela"].ToString());
+                }
+
+                reader.Dispose();
+                Res.grahUri = jelaUrls[0];
+                Res.kobasiceUri = jelaUrls[1];
+                Res.sarmaUri = jelaUrls[2];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void loadVozilaUrls()
+        {
+            List<String> vozilaUrls = new List<string>();
+            try
+            {
+                connection.Open();
+                String statement = "SELECT url_slike_vozila FROM testna.vozilo";
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                cmd.CommandType = System.Data.CommandType.Text;
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    vozilaUrls.Add(reader["url_slike_vozila"].ToString());
+                }
+                reader.Dispose();
+                Res.kombiUri = vozilaUrls[0];
+                Res.mopedUri = vozilaUrls[1];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public Int32 loadCount()
+        {
+            Int32 count = 0;
+            try
+            {
+                connection.Open();
+                String statement = "SELECT sum(n_i.kvantitet) as broj_jela" + 
+                                   " FROM narudzba_item n_i, narudzba n" +
+                                   " where n_i.narudzbaID = n.narudzbaID and n.voznjaID = 2";
+                MySqlCommand countGetter = new MySqlCommand(statement, connection);
+                countGetter.CommandType = System.Data.CommandType.Text;
+                count = Convert.ToInt32(countGetter.ExecuteScalar());
+                countGetter.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return count;
+        }
+
+        public Double loadPrice()
+        {
+            //postoji BUG
+            Double price = 0.0;
+            try
+            {
+                String statement = "SELECT sum(n_i.ukupna_cijena) as cijena" +
+                                   " FROM narudzba_item n_i, narudzba n" +
+                                   " where n_i.narudzbaID = n.narudzbaID and n.voznjaID = 2";
+                MySqlCommand priceGetter = new MySqlCommand(statement, connection);
+                priceGetter.CommandType = System.Data.CommandType.Text;
+                price = Convert.ToDouble(priceGetter.ExecuteScalar());
+                priceGetter.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return price;
+        }
+
+        public Boolean checkUserCredentials(int id, String pass)
+        {
+            MySqlDataReader reader = null;
+            try
+            {
+                String statement = "SELECT * FROM vozac where vozacID = (@1) and passsword = (@2)";
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                cmd.Parameters.AddWithValue("(@1)", id);
+                cmd.Parameters.AddWithValue("(@2)", pass);
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                reader = cmd.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return reader.HasRows;
+        }
+
+        public Int32 getVoziloID(String tip)
+        {
+            Int32 idVozila = 0;
+            try
+            {
+                String statement = "SELECT idVozila FROM vozilo where tip_vozila = (@1)";
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                cmd.Parameters.AddWithValue("(@1)", tip);
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                idVozila = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return idVozila;
         }
     }
 }

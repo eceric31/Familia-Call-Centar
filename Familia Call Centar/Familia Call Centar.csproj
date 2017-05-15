@@ -82,6 +82,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Servis\Service.cs" />
     <Compile Include="Startup.xaml.cs">
       <DependentUpon>Startup.xaml</DependentUpon>
     </Compile>
@@ -222,6 +223,8 @@
       <DependentUpon>Familia.edmx</DependentUpon>
       <LastGenOutput>Familia.cs</LastGenOutput>
     </Content>
+    <Resource Include="Slike jela\kombi.jpg" />
+    <Resource Include="Slike jela\moped.png" />
     <Resource Include="Slike jela\sarma.jpg" />
     <Resource Include="Slike jela\grah.jpg" />
     <Resource Include="Slike jela\kobasice.jpg" />

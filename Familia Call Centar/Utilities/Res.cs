@@ -9,9 +9,11 @@ namespace Familia_Call_Centar.Utilities
 {
     public static class Res
     {
-        public static String grahUri = @"C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\Slike jela\grah.jpg";
-        public static String kobasiceUri = @"C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\Slike jela\kobasice.jpg";
-        public static String sarmaUri = @"C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\Slike jela\sarma.jpg";
+        public static String grahUri;
+        public static String kobasiceUri;
+        public static String sarmaUri;
+        public static String kombiUri;
+        public static String mopedUri;
         public static String connectionString = @"server=127.0.0.1;user id=Admin;pwd=admin;persistsecurityinfo=True;database=testna";
 
         public static BitmapImage addGrahImage()
@@ -37,6 +39,24 @@ namespace Familia_Call_Centar.Utilities
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.UriSource = new Uri(Res.sarmaUri, UriKind.RelativeOrAbsolute);
+            bitmap.EndInit();
+            return bitmap;
+        }
+
+        public static BitmapImage addKombiImage()
+        {
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(Res.kombiUri, UriKind.RelativeOrAbsolute);
+            bitmap.EndInit();
+            return bitmap;
+        }
+
+        public static BitmapImage addMopedImage()
+        {
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(Res.mopedUri, UriKind.RelativeOrAbsolute);
             bitmap.EndInit();
             return bitmap;
         }

@@ -31,6 +31,7 @@ namespace Familia_Call_Centar.View
             dbHandler = new DBHandler();
             tr = new TextRange(opisJela.Document.ContentStart, opisJela.Document.ContentEnd);
             //prikazivanje slika
+            dbHandler.loadJelaUrls();
             slika1.Source = Res.addGrahImage();
             slika2.Source = Res.addKobasiceImage();
             slika3.Source = Res.addSarmaImage();

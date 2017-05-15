@@ -4,6 +4,7 @@ using Familia_Call_Centar.Utilities;
 using System.Data;
 using System;
 using System.Collections.Generic;
+using Familia_Call_Centar.Servis;
 
 namespace Familia_Call_Centar.View
 {
@@ -12,15 +13,18 @@ namespace Familia_Call_Centar.View
     /// </summary>
     public partial class NewDelivery : Page
     {
+        Service service;
         FamiliaContextClass db;
         DBHandler handler;
         DataTable narudzbeTable;
         DataTable isporukaTable;
         List<int> indexi = new List<int>();
 
-        public NewDelivery()
+        public NewDelivery(Service service)
         {
             InitializeComponent();
+
+            this.service = service;
             db = new FamiliaContextClass();
             handler = new DBHandler();
             isporukaTable = new DataTable();
@@ -81,6 +85,12 @@ namespace Familia_Call_Centar.View
         {
             isporukaTable.Clear();
             isporukaDataGrid.DataContext = isporukaTable.DefaultView;
+        }
+
+        private void daljeButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Page transportPick = new TransportPick(isporukaTable, service);
+            NavigationService.Navigate(transportPick);
         }
     }
 }

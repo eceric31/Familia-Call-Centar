@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using Familia_Call_Centar.Servis;
 
 namespace Familia_Call_Centar.View
 {
@@ -10,9 +11,11 @@ namespace Familia_Call_Centar.View
     /// </summary>
     public partial class Dashboard : Page
     {
-        public Dashboard()
+        Service service;
+        public Dashboard(Service service)
         {
             InitializeComponent();
+            this.service = service;
         }
 
         private void zaprimiNaruzbuButton_Click(object sender, RoutedEventArgs e)
@@ -29,14 +32,8 @@ namespace Familia_Call_Centar.View
 
         private void pokreniDostavu_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                NavigationService.Navigate(new Uri("/View/NewDelivery.xaml", UriKind.RelativeOrAbsolute));
-            }
-            catch (UriFormatException ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-            }
+            Page newDelivery = new NewDelivery(service);
+            NavigationService.Navigate(newDelivery);
         }
     }
 }

@@ -8,12 +8,41 @@
       d:DesignHeight="360" d:DesignWidth="640"
       Title="TransportPick">
 
-    <Grid Background="White" ShowGridLines="True">
+    <Grid Background="White">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="320"/>
+            <ColumnDefinition Width="*" MinWidth="320"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="29"/>
+            <RowDefinition Height="Auto" MinHeight="284"/>
+            <RowDefinition Height="Auto" MinHeight="46"/>
         </Grid.RowDefinitions>
-        
+
+        <Label x:Name="label" Content="Odaberite tip vozila za dostavu" HorizontalAlignment="Left" Grid.Row="0" Margin="10,2,0,0" VerticalAlignment="Top" Grid.Column="0" Height="26" Width="174"/>
+
+        <Grid Background="LightGray" Grid.Column="0" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="160"/>
+                <ColumnDefinition Width="Auto" MinWidth="160"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="142"/>
+                <RowDefinition Height="Auto" MinHeight="142"/>
+            </Grid.RowDefinitions>
+            <Image x:Name="kombiImage" Height="96" Margin="10,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" MinWidth="140" Grid.Column="0" Grid.Row="0" MouseDown="kombiImage_MouseDown"/>
+            <Label x:Name="kombiLabel" Content="Kombi" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,106,10,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
+
+            <Image x:Name="mopedImage" Grid.Column="1" HorizontalAlignment="Left" Height="96" Margin="10,10,0,0" VerticalAlignment="Top" Width="140" Grid.Row="0" MouseDown="mopedImage_MouseDown"/>
+            <Label x:Name="mopedLabel" Content="Moped" Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10,106,10,0" VerticalAlignment="Top" Height="26" Grid.Row="0"/>
+        </Grid>
+
+        <Button x:Name="zavrsiButton" Content="Završi" Grid.Column="1" HorizontalAlignment="Left" Margin="235,10,0,0" Grid.Row="2" VerticalAlignment="Top" MinWidth="75" MinHeight="26" Background="#0844A6" Foreground="White" Click="zavrsiButton_Click"/>
+        <Button x:Name="nazadButton" Content="Nazad" Grid.Column="1" HorizontalAlignment="Left" Margin="137,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Height="26" Click="nazadButton_Click"/>
+
+        <DataGrid x:Name="isporukaDataGrid" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding}" VerticalAlignment="Top" MinHeight="251" AutoGenerateColumns="True" />
+        <TextBlock x:Name="kolicinaTB" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,251,0,0" Grid.Row="1" VerticalAlignment="Top" Height="33"/>
+
     </Grid>
 </Page>

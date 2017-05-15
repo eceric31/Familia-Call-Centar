@@ -40,7 +40,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="daljeButton" Content="Dalje" HorizontalAlignment="Right" Margin="0,18,30,0" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" MinWidth="75" MinHeight="26" Foreground="White" Background="#0844A6"/>
+        <Button x:Name="daljeButton" Content="Dalje" HorizontalAlignment="Right" Margin="0,18,30,0" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" MinWidth="75" MinHeight="26" Foreground="White" Background="#0844A6" Click="daljeButton_Click"/>
         <Button x:Name="clearButton" Content="Očisti" HorizontalAlignment="Right" Margin="0,18,225,0" Grid.Row="2" VerticalAlignment="Top" MinWidth="75" MinHeight="26" Click="clearButton_Click"/>
         <Button x:Name="copyAll" Content="Prebaci Sve" HorizontalAlignment="Right" Background="LightBlue" Margin="0,18,127,0" Grid.Row="2" VerticalAlignment="Top" Grid.Column="0" MinWidth="75" MinHeight="26" Click="copyAll_Click"/>
 
