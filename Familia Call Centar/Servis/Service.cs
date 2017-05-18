@@ -24,15 +24,25 @@ namespace Familia_Call_Centar.Servis
         public Service()
         {
             handler = new DBHandler();
-            listener = new HttpListener();
             Narudzbe = new DataTable();
             Jela = new DataTable();
+
+            String prefix = @"http://*:5000/";
+            listener = new HttpListener();
+            listener.Prefixes.Clear();
+            listener.Prefixes.Add(prefix);
         }
 
         public async void listen()
         {
-            listener.Start();
-            listen();
+            try {
+                listener.Start();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
             while (true)
             {
                 HttpListenerContext context = await listener.GetContextAsync();
@@ -41,15 +51,16 @@ namespace Familia_Call_Centar.Servis
 
                 //if bogus data is sent
                 if (reqData == null) continue;
-                //if nothing to send
-                else if (String.IsNullOrEmpty(TipVozila) || narudzbe.Rows.Count == 0)
-                    await Task.Factory.StartNew(() => handleEmptyData(context));
+                //if login request
+                else if (reqValues[0].Equals("login"))
+                    await Task.Factory.StartNew(() => handleLogin(context, Convert.ToInt32(reqValues[1]), reqValues[2]));
                 else
                 {
-                    if (reqValues[0].Equals("login"))
-                        await Task.Factory.StartNew(() => handleLogin(context, Convert.ToInt32(reqValues[1]), reqValues[2]));
-                    else if (reqValues[0].Equals("isporuka"))
-                        await Task.Factory.StartNew(() => handleIsporuka(context));
+                    //if nothing to send
+                    if (reqValues[0].Equals("isporuka") && (String.IsNullOrEmpty(TipVozila) || narudzbe.Rows.Count == 0))
+                        await Task.Factory.StartNew(() => handleEmptyData(context));
+                    else if (reqValues[0].Equals("isporuka") && !(String.IsNullOrEmpty(TipVozila) || narudzbe.Rows.Count == 0))
+                        await Task.Factory.StartNew(() => handleIsporuka(context, Convert.ToInt32(reqValues[1])));
                 }
             }
         }
@@ -57,9 +68,8 @@ namespace Familia_Call_Centar.Servis
         private string getRequestData(HttpListenerContext ctx)
         {
             String requestData = null;
-            
             //read header
-            NameValueCollection headers = ctx.Request.Headers;
+            NameValueCollection headers = ctx.Request.QueryString;
             List<String> values = new List<String>();
             for (int i = 0; i < headers.Count; i++)
             {
@@ -69,7 +79,7 @@ namespace Familia_Call_Centar.Servis
             if (values.Contains("login")) requestData = values[0] + " " + values[1] + " " + values[2];
             else if (values.Contains("isporuka")) requestData = values[0] + " " + values[1];
 
-            Console.WriteLine(requestData);
+            Console.WriteLine("Url parameters: " + requestData);
 
             return requestData;
         }
@@ -82,6 +92,8 @@ namespace Familia_Call_Centar.Servis
                 ctx.Response.StatusCode = 404;
                 byte[] empty = new byte[0];
                 await output.WriteAsync(empty, 0, 0);
+                await output.FlushAsync();
+                output.Dispose();
             }
             catch (Exception ex)
             {
@@ -92,7 +104,7 @@ namespace Familia_Call_Centar.Servis
 
         private async void handleLogin(HttpListenerContext ctx, int uID, String pass)
         {
-            if(handler.checkUserCredentials(uID, pass)) ctx.Response.StatusCode = 200;
+            if(handler.checkUserCredentials(uID, pass) == 1) ctx.Response.StatusCode = 200;
             else ctx.Response.StatusCode = 404;
             try
             {
@@ -100,6 +112,8 @@ namespace Familia_Call_Centar.Servis
                 //just return the reponse code
                 byte[] empty = new byte[0];
                 await output.WriteAsync(empty, 0, 0);
+                await output.FlushAsync();
+                output.Dispose();
             }
             catch (Exception ex)
             {
@@ -108,13 +122,17 @@ namespace Familia_Call_Centar.Servis
             }
         }
 
-        private async void handleIsporuka(HttpListenerContext ctx)
+        private async void handleIsporuka(HttpListenerContext ctx, int id)
         {
             try
             {
                 var output = ctx.Response.OutputStream;
                 byte[] json = Encoding.ASCII.GetBytes(toJson());
                 await output.WriteAsync(json, 0, json.Length);
+                await output.FlushAsync();
+                output.Dispose();
+
+
             }
             catch (Exception ex)
             {
@@ -197,17 +215,28 @@ namespace Familia_Call_Centar.Servis
                 json.Append("\"jela\":[\n");
                 for (int j = 0; j < jela.Rows.Count; j++)
                 {
-                    json.Append("{\n");
-                    json.Append("\"naziv_jela\": \"" + jela.Rows[j][0].ToString()+ "\",\n");
-                    json.Append("\"kvantitet\": \"" + jela.Rows[j][1].ToString() + "\"\n");
-                    if (j == jela.Rows.Count - 1) json.Append("}\n");
-                    else json.Append("},\n");
+                    if (Convert.ToInt32(jela.Rows[j][2]).Equals(Convert.ToInt32(narudzbe.Rows[i][7].ToString()))) 
+                    {
+                        json.Append("{\n");
+
+                        json.Append("\"naziv_jela\": \"" + jela.Rows[j][0].ToString() + "\",\n");
+                        json.Append("\"kvantitet\": \"" + jela.Rows[j][1].ToString() + "\"\n");
+                        if (j == jela.Rows.Count - 1) json.Append("}\n");
+                        else json.Append("},\n");
+                    }
                 }
                 if(i != narudzbe.Rows.Count - 1) json.Append("],\n\"cijena\": \"" + narudzbe.Rows[i][6].ToString() + "\"\n},");
                 else json.Append("],\n\"cijena\": \"" + narudzbe.Rows[i][6].ToString() + "\"\n}\n]\n}");
             }
-            Console.WriteLine(json);
             return json.ToString();
+        }
+
+        private void clearValues()
+        {
+            idVozila = 0;
+            tipVozila = null;
+            narudzbe.Clear();
+            jela.Clear();
         }
     }
 }

@@ -115,7 +115,7 @@ namespace Familia_Call_Centar.Utilities
             {
                 connection.Open();
                 String statement = "select n.ime_narucioca, n.prezime_narucioca, n.broj_telefona_narucioca, " +
-                                   "n.adresa_firme, n.ime_firme, n.ocekivano_vrijeme_isporuke, " +
+                                   "n.ime_firme, n.adresa_firme, n.ocekivano_vrijeme_isporuke, " +
                                    "sum(n_i.ukupna_cijena) " +
                                    "from narudzba n, narudzba_item n_i " +
                                    "where n.narudzbaID = n_i.narudzbaID and n.voznjaID = 2 " +
@@ -253,10 +253,10 @@ namespace Familia_Call_Centar.Utilities
 
         public Double loadPrice()
         {
-            //postoji BUG
             Double price = 0.0;
             try
             {
+                connection.Open();
                 String statement = "SELECT sum(n_i.ukupna_cijena) as cijena" +
                                    " FROM narudzba_item n_i, narudzba n" +
                                    " where n_i.narudzbaID = n.narudzbaID and n.voznjaID = 2";
@@ -277,18 +277,18 @@ namespace Familia_Call_Centar.Utilities
             return price;
         }
 
-        public Boolean checkUserCredentials(int id, String pass)
+        public int checkUserCredentials(int id, String pass)
         {
-            MySqlDataReader reader = null;
+            int br = 0;
             try
             {
-                String statement = "SELECT * FROM vozac where vozacID = (@1) and passsword = (@2)";
+                connection.Open();
+                String statement = "SELECT * FROM vozac where vozacID = " + id + " and passsword = \"" + pass + "\"";
                 MySqlCommand cmd = new MySqlCommand(statement, connection);
-                cmd.Parameters.AddWithValue("(@1)", id);
-                cmd.Parameters.AddWithValue("(@2)", pass);
                 cmd.CommandType = System.Data.CommandType.Text;
 
-                reader = cmd.ExecuteReader();
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while(reader.Read()) br++;
             }
             catch (Exception ex)
             {
@@ -299,7 +299,7 @@ namespace Familia_Call_Centar.Utilities
             {
                 connection.Close();
             }
-            return reader.HasRows;
+            return br;
         }
 
         public Int32 getVoziloID(String tip)
@@ -307,9 +307,9 @@ namespace Familia_Call_Centar.Utilities
             Int32 idVozila = 0;
             try
             {
-                String statement = "SELECT idVozila FROM vozilo where tip_vozila = (@1)";
+                connection.Open();
+                String statement = "SELECT voziloID FROM vozilo where tip_vozila = \"" + tip + "\"";
                 MySqlCommand cmd = new MySqlCommand(statement, connection);
-                cmd.Parameters.AddWithValue("(@1)", tip);
                 cmd.CommandType = System.Data.CommandType.Text;
 
                 idVozila = Convert.ToInt32(cmd.ExecuteScalar());
@@ -326,19 +326,26 @@ namespace Familia_Call_Centar.Utilities
             return idVozila;
         }
 
-        public DataTable getOrderIDs()
+        public DataTable getOrderIDs(DataTable narudzbe)
         {
-            DataTable column = new DataTable();
             try
             {
+                DataTable table = new DataTable();
                 connection.Open();
-                String statement = "select narudzbaID from narudzba " +
-                    "where voznjaID = 2 order by adresa_firme, ocekivano_vrijeme_isporuke desc";
-
+                String statement = "select * from narudzba where voznjaID = 2";
                 MySqlCommand cmd = new MySqlCommand(statement, connection);
                 using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
                 {
-                    adapter.Fill(column);
+                    adapter.Fill(table);
+                }
+
+                for(int i = 0; i < narudzbe.Rows.Count; i++)
+                {
+                    for(int j = 0; j < table.Rows.Count; j++)
+                    {
+                        if (Convert.ToDateTime(narudzbe.Rows[i][5]).Equals(Convert.ToDateTime(table.Rows[j][6])))
+                            narudzbe.Rows[i][7] = Convert.ToInt32(table.Rows[j][0]);
+                    }
                 }
                 cmd.Dispose();
             }
@@ -351,11 +358,10 @@ namespace Familia_Call_Centar.Utilities
             {
                 connection.Close();
             }
-            column.Columns[0].ColumnName = "narudzbaID";
-            return column;
+            return narudzbe;
         }
 
-        public DataTable fillDataTableMeals()
+        public DataTable fillDataTableMeals(DataTable jela, DataTable narudzbe)
         {
             DataTable table = new DataTable();
             try
@@ -372,6 +378,22 @@ namespace Familia_Call_Centar.Utilities
                 {
                     adapter.Fill(table);
                 }
+
+                for (int i = 0; i < narudzbe.Rows.Count; i++)
+                {
+                    for (int j = 0; j < table.Rows.Count; j++)
+                    {
+                        if (Convert.ToInt32(narudzbe.Rows[i][7]) == Convert.ToInt32(table.Rows[j][2]))
+                        {
+                            DataRow row = jela.NewRow();
+                            row["naziv"] = table.Rows[j][0].ToString();
+                            row["kvantitet"] = Convert.ToInt32(table.Rows[j][1]);
+                            row["narudzbaID"] = Convert.ToInt32(table.Rows[j][2]);
+                            jela.Rows.Add(row);
+                        }
+                    }
+                }
+
                 cmd.Dispose();
             }
             catch (Exception ex)
@@ -383,7 +405,7 @@ namespace Familia_Call_Centar.Utilities
             {
                 connection.Close();
             }
-            return table;
+            return jela;
         }
     }
 }

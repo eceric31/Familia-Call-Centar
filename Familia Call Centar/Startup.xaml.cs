@@ -17,6 +17,7 @@ namespace Familia_Call_Centar
             InitializeComponent();
             Service service = new Service();
             Thread th = new Thread(new ThreadStart(service.listen));
+            th.Start();
             MainFrame.Navigate(new Dashboard(service));
         }
     }

@@ -14,7 +14,7 @@ namespace Familia_Call_Centar.Utilities
         public static String sarmaUri;
         public static String kombiUri;
         public static String mopedUri;
-        public static String connectionString = @"server=127.0.0.1;user id=Admin;pwd=admin;persistsecurityinfo=True;database=testna";
+        public static String connectionString = @"server=127.0.0.1;user id=Admin;pwd=admin;persistsecurityinfo=True;database=testna;Allow Zero Datetime=true";
 
         public static BitmapImage addGrahImage()
         {

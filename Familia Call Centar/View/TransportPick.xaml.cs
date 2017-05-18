@@ -61,12 +61,19 @@ namespace Familia_Call_Centar.View
                 service.IdVozila = handler.getVoziloID(selectedTransport);
                 service.TipVozila = selectedTransport;
 
-                service.Narudzbe = isporukaTable;
-                service.Narudzbe.Merge(handler.getOrderIDs());
+                DataTable narudzbe = isporukaTable;
+                narudzbe.Columns.Add("orderID", typeof(int));
+                narudzbe = handler.getOrderIDs(narudzbe);
 
-                service.Jela = handler.fillDataTableMeals();
+                DataTable jela = new DataTable();
+                jela.Columns.Add("naziv", typeof(string));
+                jela.Columns.Add("kvantitet", typeof(int));
+                jela.Columns.Add("narudzbaID", typeof(int));
+                jela = handler.fillDataTableMeals(jela, narudzbe);
                 
-                //trebaju jos narudzba_itemsi
+                service.Jela = jela;
+                service.Narudzbe = isporukaTable;
+
                 Page dash = new Dashboard(service);
                 NavigationService.Navigate(dash);
             }
