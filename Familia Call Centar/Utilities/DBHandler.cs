@@ -225,18 +225,23 @@ namespace Familia_Call_Centar.Utilities
             }
         }
 
-        public Int32 loadCount()
+        public Int32 loadCount(List<int> ids)
         {
             Int32 count = 0;
             try
             {
                 connection.Open();
-                String statement = "SELECT sum(n_i.kvantitet) as broj_jela" + 
-                                   " FROM narudzba_item n_i, narudzba n" +
-                                   " where n_i.narudzbaID = n.narudzbaID and n.voznjaID = 2";
-                MySqlCommand countGetter = new MySqlCommand(statement, connection);
-                countGetter.CommandType = System.Data.CommandType.Text;
-                count = Convert.ToInt32(countGetter.ExecuteScalar());
+                MySqlCommand countGetter = null;
+                for (int i = 0; i < ids.Count; i++)
+                {
+                    String statement = "SELECT sum(n_i.kvantitet) as broj_jela" +
+                                       " FROM narudzba_item n_i, narudzba n" +
+                                       " where n_i.narudzbaID = n.narudzbaID and n.voznjaID = 2" +
+                                       " and n.narudzbaID = " + ids[i];
+                    countGetter = new MySqlCommand(statement, connection);
+                    countGetter.CommandType = System.Data.CommandType.Text;
+                    count += Convert.ToInt32(countGetter.ExecuteScalar());
+                }
                 countGetter.Dispose();
             }
             catch (Exception ex)
@@ -251,18 +256,23 @@ namespace Familia_Call_Centar.Utilities
             return count;
         }
 
-        public Double loadPrice()
+        public Double loadPrice(List<int> ids)
         {
             Double price = 0.0;
             try
             {
                 connection.Open();
-                String statement = "SELECT sum(n_i.ukupna_cijena) as cijena" +
-                                   " FROM narudzba_item n_i, narudzba n" +
-                                   " where n_i.narudzbaID = n.narudzbaID and n.voznjaID = 2";
-                MySqlCommand priceGetter = new MySqlCommand(statement, connection);
-                priceGetter.CommandType = System.Data.CommandType.Text;
-                price = Convert.ToDouble(priceGetter.ExecuteScalar());
+                MySqlCommand priceGetter = null;
+                for (int i = 0; i < ids.Count; i++)
+                {
+                    String statement = "SELECT sum(n_i.ukupna_cijena) as cijena" +
+                                       " FROM narudzba_item n_i, narudzba n" +
+                                       " where n_i.narudzbaID = n.narudzbaID and n.voznjaID = 2" +
+                                       " and n.narudzbaID = " + ids[i];
+                    priceGetter = new MySqlCommand(statement, connection);
+                    priceGetter.CommandType = System.Data.CommandType.Text;
+                    price += Convert.ToInt32(priceGetter.ExecuteScalar());
+                }
                 priceGetter.Dispose();
             }
             catch (Exception ex)

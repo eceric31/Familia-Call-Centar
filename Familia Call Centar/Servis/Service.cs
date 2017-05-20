@@ -131,8 +131,7 @@ namespace Familia_Call_Centar.Servis
                 await output.WriteAsync(json, 0, json.Length);
                 await output.FlushAsync();
                 output.Dispose();
-
-
+                clearValues();
             }
             catch (Exception ex)
             {

@@ -27,6 +27,8 @@ namespace Familia_Call_Centar.View
         DataTable isporukaTable;
         DBHandler handler;
         String selectedTransport;
+
+        DataTable narudzbe;
         public TransportPick(DataTable isporuka, Service service)
         {
             InitializeComponent();
@@ -40,8 +42,18 @@ namespace Familia_Call_Centar.View
 
             isporukaDataGrid.DataContext = isporukaTable.DefaultView;
 
-            kolicinaTB.Text = "Za isporuku " + handler.loadCount().ToString() +
-                              " jela, čija je ukupna cijena " + handler.loadPrice().ToString() + " KM";
+            narudzbe = isporukaTable;
+            narudzbe.Columns.Add("orderID", typeof(int));
+            narudzbe = handler.getOrderIDs(narudzbe);
+
+            List<int> ids = new List<int>();
+            for (int i = 0; i < narudzbe.Rows.Count; i++)
+                ids.Add(Convert.ToInt32(narudzbe.Rows[i][7]));
+
+            narudzbe.Columns.Remove(narudzbe.Columns[7]);
+
+            kolicinaTB.Content = "Za isporuku " + handler.loadCount(ids).ToString() +
+                              " jela, čija je ukupna cijena " + handler.loadPrice(ids).ToString() + " KM";
         }
 
         private void nazadButton_Click(object sender, RoutedEventArgs e)
@@ -61,7 +73,6 @@ namespace Familia_Call_Centar.View
                 service.IdVozila = handler.getVoziloID(selectedTransport);
                 service.TipVozila = selectedTransport;
 
-                DataTable narudzbe = isporukaTable;
                 narudzbe.Columns.Add("orderID", typeof(int));
                 narudzbe = handler.getOrderIDs(narudzbe);
 
@@ -81,12 +92,28 @@ namespace Familia_Call_Centar.View
 
         private void kombiImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if(!String.IsNullOrEmpty(selectedTransport) && selectedTransport.Equals("Moped"))
+            {
+                selectedTransport = null;
+                mopedLabel.Foreground = Brushes.Black;
+                mopedLabel.FontWeight = FontWeights.Thin;
+            }
             selectedTransport = "Kombi";
+            kombiLabel.Foreground = Brushes.DeepSkyBlue;
+            kombiLabel.FontWeight = FontWeights.Bold;
         }
 
         private void mopedImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (!String.IsNullOrEmpty(selectedTransport) && selectedTransport.Equals("Kombi"))
+            {
+                selectedTransport = null;
+                kombiLabel.Foreground = Brushes.Black;
+                kombiLabel.FontWeight = FontWeights.Thin;
+            }
             selectedTransport = "Moped";
+            mopedLabel.Foreground = Brushes.DeepSkyBlue;
+            mopedLabel.FontWeight = FontWeights.Bold;
         }
     }
 }

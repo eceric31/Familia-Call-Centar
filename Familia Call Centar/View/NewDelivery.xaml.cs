@@ -101,5 +101,11 @@ namespace Familia_Call_Centar.View
             Page transportPick = new TransportPick(isporukaTable, service);
             NavigationService.Navigate(transportPick);
         }
+
+        private void nazadButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Page dash = new Dashboard(service);
+            NavigationService.Navigate(dash);
+        }
     }
 }

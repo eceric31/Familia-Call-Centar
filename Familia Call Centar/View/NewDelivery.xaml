@@ -12,29 +12,31 @@
         <CollectionViewSource x:Key="narudzbaViewSource" d:DesignSource="{d:DesignInstance {x:Type Model:narudzba}, CreateList=True}"/>
     </Page.Resources>
 
-    <Grid Background="White" DataContext="{StaticResource narudzbaViewSource}" ShowGridLines="True" RenderTransformOrigin="0.5,0.511">
+    <Grid Background="White" DataContext="{StaticResource narudzbaViewSource}" ShowGridLines="False" RenderTransformOrigin="0.5,0.511">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto" MinWidth="0"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto" MinWidth="0"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="*" MinHeight="0"/>
             <RowDefinition Height="*" MinHeight="153"/>
             <RowDefinition Height="*" MinHeight="153"/>
             <RowDefinition Height="*" MinHeight="60"/>
+            <RowDefinition Height="*" MinHeight="0"/>
         </Grid.RowDefinitions>
 
-        <DataGrid x:Name="narudzbaDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="31,41,30,2" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="True" Grid.Row="0" SelectionChanged="narudzbaDataGrid_SelectionChanged">
-            
-        </DataGrid>
+        <DataGrid x:Name="narudzbaDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="31,33,30,0" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="True" Grid.Row="1" Grid.Column="1" SelectionChanged="narudzbaDataGrid_SelectionChanged"/>
 
-        <Button x:Name="daljeButton" Content="Dalje" HorizontalAlignment="Right" Margin="0,18,30,0" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" MinWidth="75" MinHeight="26" Foreground="White" Background="#0844A6" Click="daljeButton_Click"/>
-        <Button x:Name="clearButton" Content="Očisti" HorizontalAlignment="Right" Margin="0,18,225,0" Grid.Row="2" VerticalAlignment="Top" MinWidth="75" MinHeight="26" Click="clearButton_Click"/>
-        <Button x:Name="copyAll" Content="Prebaci Sve" HorizontalAlignment="Right" Background="LightBlue" Margin="0,18,127,0" Grid.Row="2" VerticalAlignment="Top" Grid.Column="0" MinWidth="75" MinHeight="26" Click="copyAll_Click"/>
+        <Button x:Name="daljeButton" Content="Dalje" HorizontalAlignment="Right" Margin="0,18,30,0" Grid.Row="3" Grid.Column="1" VerticalAlignment="Top" MinWidth="75" MinHeight="26" Foreground="White" Background="#0844A6" Click="daljeButton_Click"/>
+        <Button x:Name="clearButton" Content="Očisti" HorizontalAlignment="Right" Margin="0,18,225,0" Grid.Row="3" Grid.Column="1" VerticalAlignment="Top" MinWidth="75" MinHeight="26" Click="clearButton_Click" Background="LightBlue"/>
+        <Button x:Name="copyAll" Content="Prebaci Sve" HorizontalAlignment="Right" Background="LightBlue" Margin="0,18,127,0" Grid.Row="3" Grid.Column="1" VerticalAlignment="Top" MinWidth="75" MinHeight="26" Click="copyAll_Click"/>
+        <Button x:Name="nazadButton" Content="Nazad" Grid.Column="1" HorizontalAlignment="Right" MinHeight="26" Margin="0,18,324,0" Grid.Row="3" VerticalAlignment="Top" MinWidth="75" Click="nazadButton_Click"/>
 
-        <Label x:Name="label" Content="Primljene narudžbe" HorizontalAlignment="Left" Margin="31,10,0,0" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0"/>
-        <Label x:Name="label1" Content="Narudžbe za dostavu" HorizontalAlignment="Left" Margin="31,7,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0"/>
+        <Label x:Name="label" Content="Primljene narudžbe" HorizontalAlignment="Left" Margin="31,2,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1"/>
+        <Label x:Name="label1" Content="Narudžbe za dostavu" HorizontalAlignment="Left" Margin="31,7,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"/>
 
-        <DataGrid x:Name="isporukaDataGrid"  HorizontalAlignment="Left" ItemsSource="{Binding}" VerticalAlignment="Top" Margin="31,38,0,0" Grid.Row="1" MinHeight="105" MinWidth="579" AutoGenerateColumns="True" Width="579">
-        </DataGrid>
+        <DataGrid x:Name="isporukaDataGrid"  HorizontalAlignment="Stretch" ItemsSource="{Binding}" VerticalAlignment="Top" Margin="31,38,30,0" Grid.Row="2"  MinHeight="105" MinWidth="579" AutoGenerateColumns="True" Grid.Column="1"/>
     </Grid>
 </Page>
