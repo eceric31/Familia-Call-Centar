@@ -27,7 +27,7 @@
             <RowDefinition Height="*" MinHeight="0"/>
         </Grid.RowDefinitions>
 
-        <DataGrid x:Name="narudzbaDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" Margin="31,33,30,0" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="True" Grid.Row="1" Grid.Column="1" SelectionChanged="narudzbaDataGrid_SelectionChanged"/>
+        <DataGrid x:Name="narudzbaDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected"  CanUserAddRows="False" Margin="31,33,30,10" ItemsSource="{Binding}" EnableRowVirtualization="True" AutoGenerateColumns="True" Grid.Row="1" Grid.Column="1" SelectionChanged="narudzbaDataGrid_SelectionChanged"/>
 
         <Button x:Name="daljeButton" Content="Dalje" HorizontalAlignment="Right" Margin="0,18,30,0" Grid.Row="3" Grid.Column="1" VerticalAlignment="Top" MinWidth="75" MinHeight="26" Foreground="White" Background="#0844A6" Click="daljeButton_Click"/>
         <Button x:Name="clearButton" Content="Očisti" HorizontalAlignment="Right" Margin="0,18,225,0" Grid.Row="3" Grid.Column="1" VerticalAlignment="Top" MinWidth="75" MinHeight="26" Click="clearButton_Click" Background="LightBlue"/>
@@ -37,6 +37,6 @@
         <Label x:Name="label" Content="Primljene narudžbe" HorizontalAlignment="Left" Margin="31,2,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1"/>
         <Label x:Name="label1" Content="Narudžbe za dostavu" HorizontalAlignment="Left" Margin="31,7,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"/>
 
-        <DataGrid x:Name="isporukaDataGrid"  HorizontalAlignment="Stretch" ItemsSource="{Binding}" VerticalAlignment="Top" Margin="31,38,30,0" Grid.Row="2"  MinHeight="105" MinWidth="579" AutoGenerateColumns="True" Grid.Column="1"/>
+        <DataGrid x:Name="isporukaDataGrid"  HorizontalAlignment="Stretch"  CanUserAddRows="False" ItemsSource="{Binding}" VerticalAlignment="Top" Margin="31,38,30,0" Grid.Row="2"  MinHeight="105" MinWidth="579" AutoGenerateColumns="True" Grid.Column="1"/>
     </Grid>
 </Page>

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Data;
 using Familia_Call_Centar.Utilities;
 using System.Globalization;
+using Familia_Call_Centar.Servis;
 
 namespace Familia_Call_Centar.View
 {
@@ -21,9 +22,11 @@ namespace Familia_Call_Centar.View
         narudzba narudzba;
         FamiliaContextClass db;
         DBHandler handler;
-        public OrderInfo()
+        Service service;
+        public OrderInfo(Service service)
         {
             InitializeComponent();
+            this.service = service;
             String date = DateTime.Now.Day.ToString() + "/" + DateTime.Now.Month.ToString() + "/" +
                 DateTime.Now.Year.ToString();
             vrijemeIspInput.Text = date;
@@ -64,20 +67,24 @@ namespace Familia_Call_Centar.View
         {
             if(dataRowSelected)
             {
-                //ovdje se baca exception
                 narudzba = new narudzba(ime, prezime, brTel, firma, adresa, getDateTime());
                 dataRowSelected = false;
             }
             else
             {
-                //a i ovdje
                 narudzba = new narudzba(imeInput.Text, prezimeInput.Text, brTelInput.Text, firmaInput.Text, adresaInput.Text,
                     getDateTime());
                 
             }
             saveOrder();
-            Page foodPicker = new FoodPick(narudzba.narudzbaID);
+            Page foodPicker = new FoodPick(narudzba.narudzbaID, service);
             NavigationService.Navigate(foodPicker);
+        }
+
+        private void nazadButton_Click(object sender, RoutedEventArgs e)
+        {
+            Page dash = new Dashboard(service);
+            NavigationService.Navigate(dash);
         }
 
         private void saveOrder()
@@ -116,6 +123,12 @@ namespace Familia_Call_Centar.View
             brTelInput.Clear();
             firmaInput.Clear();
             adresaInput.Clear();
+            podaciONaruciocu.Content = "Podaci o naručiocu";
+            prezimeLabel.Content = "";
+            brTelLabel.Content = "";
+            firmaLabel.Content = "";
+            adresaLabel.Content = "";
+            vrijemeLabel.Content = "";
         }
 
         private void narudzbaDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -124,25 +137,61 @@ namespace Familia_Call_Centar.View
             table = ((DataView)narudzbaDataGrid.ItemsSource).ToTable();
             var dg = sender as DataGrid;
             var index = dg.SelectedIndex;
-
+            
             ime = table.Rows[index][0].ToString();
             prezime = table.Rows[index][1].ToString();
             brTel = table.Rows[index][2].ToString();
             firma = table.Rows[index][3].ToString();
             adresa = table.Rows[index][4].ToString();
             dataRowSelected = true;
+
+            imeInput.Text = ime;
+            prezimeInput.Text = prezime;
+            brTelInput.Text = brTel;
+            firmaInput.Text = firma;
+            adresaInput.Text = adresa;
+
             MessageBox.Show("Molimo unesite očekivano vrijeme isporuke");
         }
 
         private DateTime getDateTime()
         {
-            //pazi exception
             String time = vrijemeIspInput.Text;
             string[] dateTimeSplit = time.Split();
             string[] timeSplit = dateTimeSplit[1].Split(':');
             int hours = Convert.ToInt32(timeSplit[0]);
             int minutes = Convert.ToInt32(timeSplit[1]);
             return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0, DateTimeKind.Unspecified);
+        }
+
+        private void imeInput_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            podaciONaruciocu.Content = "Ime naručioca";
+        }
+
+        private void prezimeInput_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            prezimeLabel.Content = "Prezime naručioca";
+        }
+
+        private void brTelInput_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            brTelLabel.Content = "Broj telefona";
+        }
+
+        private void firmaInput_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            firmaLabel.Content = "Naziv firme";
+        }
+
+        private void adresaInput_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            adresaLabel.Content = "Adresa firme";
+        }
+
+        private void vrijemeIspInput_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            vrijemeLabel.Content = "Očekivano vrijeme isporuke";
         }
     }
 }

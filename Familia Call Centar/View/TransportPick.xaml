@@ -41,7 +41,7 @@
         <Button x:Name="zavrsiButton" Content="Završi" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,10,0" Grid.Row="2" VerticalAlignment="Top" MinWidth="75" MinHeight="26" Background="#0844A6" Foreground="White" Click="zavrsiButton_Click"/>
         <Button x:Name="nazadButton" Content="Nazad" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,106,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Height="26" Click="nazadButton_Click"/>
 
-        <DataGrid x:Name="isporukaDataGrid" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" ItemsSource="{Binding}" VerticalAlignment="Top" MinHeight="251" AutoGenerateColumns="True" Height="217" />
+        <DataGrid x:Name="isporukaDataGrid" Grid.Column="1" Grid.Row="1" CanUserAddRows="False"  HorizontalAlignment="Stretch" ItemsSource="{Binding}" VerticalAlignment="Top" MinHeight="251" AutoGenerateColumns="True" Height="217" />
         <Label x:Name="kolicinaTB" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,251,0,0" Grid.Row="1" VerticalAlignment="Top" MinHeight="33" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
 
     </Grid>

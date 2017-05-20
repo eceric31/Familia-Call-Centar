@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using Familia_Call_Centar.Utilities;
 using Familia_Call_Centar.Model;
+using Familia_Call_Centar.Servis;
 
 namespace Familia_Call_Centar.View
 {
@@ -20,10 +21,12 @@ namespace Familia_Call_Centar.View
         List<jelo> jela;
         TextRange tr;
         DBHandler dbHandler;
+        Service service;
 
-        public FoodPick(int nID)
+        public FoodPick(int nID, Service service)
         {
             InitializeComponent();
+            this.service = service;
             narudzbaID = nID;
             //inicijalizacija resursa
             jela = new List<jelo>();
@@ -94,7 +97,7 @@ namespace Familia_Call_Centar.View
         private void button_Click(object sender, RoutedEventArgs e)
         {
             saveOrderItems();
-            Page dash = new Dashboard();
+            Page dash = new Dashboard(service);
             NavigationService.Navigate(dash);
         }
 

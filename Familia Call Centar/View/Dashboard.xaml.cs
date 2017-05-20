@@ -13,11 +13,6 @@ namespace Familia_Call_Centar.View
     {
         Service service;
 
-        public Dashboard()
-        {
-            InitializeComponent();
-        }
-
         public Dashboard(Service service)
         {
             InitializeComponent();
@@ -26,14 +21,8 @@ namespace Familia_Call_Centar.View
 
         private void zaprimiNaruzbuButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                NavigationService.Navigate(new Uri("/View/OrderInfo.xaml", UriKind.RelativeOrAbsolute));
-            }
-            catch(UriFormatException ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-            }
+            Page newNarudzba = new OrderInfo(service);
+            NavigationService.Navigate(newNarudzba);
         }
 
         private void pokreniDostavu_Click(object sender, RoutedEventArgs e)
