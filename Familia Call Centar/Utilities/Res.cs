@@ -60,5 +60,14 @@ namespace Familia_Call_Centar.Utilities
             bitmap.EndInit();
             return bitmap;
         }
+
+        public static BitmapImage addImage(string path)
+        {
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
+            bitmap.EndInit();
+            return bitmap;
+        }
     }
 }

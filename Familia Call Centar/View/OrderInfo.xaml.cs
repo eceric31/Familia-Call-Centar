@@ -8,6 +8,8 @@ using System.Data;
 using Familia_Call_Centar.Utilities;
 using System.Globalization;
 using Familia_Call_Centar.Servis;
+using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace Familia_Call_Centar.View
 {
@@ -23,18 +25,26 @@ namespace Familia_Call_Centar.View
         FamiliaContextClass db;
         DBHandler handler;
         Service service;
+        DataTable _table;
+        
         public OrderInfo(Service service)
         {
             InitializeComponent();
             this.service = service;
             String date = DateTime.Now.Day.ToString() + "/" + DateTime.Now.Month.ToString() + "/" +
                 DateTime.Now.Year.ToString();
-            vrijemeIspInput.Text = date;
             db = new FamiliaContextClass();
             handler = new DBHandler();
 
-            DataTable table = handler.fillDataTable();
-            narudzbaDataGrid.DataContext = table.DefaultView;
+            _table = handler.fillDataTable();
+            _table.Columns[0].ColumnName = "Ime naručioca";
+            _table.Columns[1].ColumnName = "Prezime naručioca";
+            _table.Columns[2].ColumnName = "Broj telefona";
+            _table.Columns[3].ColumnName = "Naziv firme";
+            _table.Columns[4].ColumnName = "Adresa firme";
+            narudzbaDataGrid.DataContext = _table.DefaultView;
+
+            addComboBoxValues(date);
         }
 
         private void clearClick(object sender, RoutedEventArgs e)
@@ -98,16 +108,6 @@ namespace Familia_Call_Centar.View
             catch (System.Data.Entity.Validation.DbEntityValidationException e)
             {
                 Console.WriteLine(e.StackTrace);
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    Debug.WriteLine(@"Entity of type " + eve.Entry.Entity.GetType().Name
-                        + " in state " + eve.Entry.State + " has the following validation errors: ");
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
-                    }
-                }
             }
             catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
             {
@@ -123,12 +123,18 @@ namespace Familia_Call_Centar.View
             brTelInput.Clear();
             firmaInput.Clear();
             adresaInput.Clear();
+            combobox.Text = "";
+
             podaciONaruciocu.Content = "Podaci o naručiocu";
             prezimeLabel.Content = "";
             brTelLabel.Content = "";
             firmaLabel.Content = "";
             adresaLabel.Content = "";
             vrijemeLabel.Content = "";
+
+            dataRowSelected = false;
+            narudzbaDataGrid.UnselectAllCells();
+            narudzbaDataGrid.DataContext = _table.DefaultView;
         }
 
         private void narudzbaDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -137,31 +143,72 @@ namespace Familia_Call_Centar.View
             table = ((DataView)narudzbaDataGrid.ItemsSource).ToTable();
             var dg = sender as DataGrid;
             var index = dg.SelectedIndex;
-            
-            ime = table.Rows[index][0].ToString();
-            prezime = table.Rows[index][1].ToString();
-            brTel = table.Rows[index][2].ToString();
-            firma = table.Rows[index][3].ToString();
-            adresa = table.Rows[index][4].ToString();
-            dataRowSelected = true;
 
-            imeInput.Text = ime;
-            prezimeInput.Text = prezime;
-            brTelInput.Text = brTel;
-            firmaInput.Text = firma;
-            adresaInput.Text = adresa;
+            //ima neki bug sa ovim selektovanjem
+            bool bug = false;
+            if (index == -1)
+            {
+                index = 0;
+                imeInput.Clear();
+                prezimeInput.Clear();
+                brTelInput.Clear();
+                firmaInput.Clear();
+                adresaInput.Clear();
+                bug = true;
+            }
+            if (!bug)
+            {
+                ime = table.Rows[index][0].ToString();
+                prezime = table.Rows[index][1].ToString();
+                brTel = table.Rows[index][2].ToString();
+                firma = table.Rows[index][3].ToString();
+                adresa = table.Rows[index][4].ToString();
+                dataRowSelected = true;
 
-            MessageBox.Show("Molimo unesite očekivano vrijeme isporuke");
+                imeInput.Text = ime;
+                prezimeInput.Text = prezime;
+                brTelInput.Text = brTel;
+                firmaInput.Text = firma;
+                adresaInput.Text = adresa;
+
+                MessageBox.Show("Molimo unesite očekivano vrijeme isporuke");
+            }
+        }
+
+        private void imeInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            DataTable tmp = new DataTable();
+            tmp.Columns.Add("Ime naručioca", typeof(string));
+            tmp.Columns.Add("Prezime naručioca", typeof(string));
+            tmp.Columns.Add("Broj telefona", typeof(string));
+            tmp.Columns.Add("Naziv firme", typeof(string));
+            tmp.Columns.Add("Adresa firme", typeof(string));
+            String input = imeInput.Text;
+
+            for (int i = 0; i < _table.Rows.Count; i++)
+            {
+                if (_table.Rows[i][0].ToString().Contains(input))
+                {
+                    DataRow row = tmp.NewRow();
+                    row["Ime naručioca"] = _table.Rows[i][0].ToString();
+                    row["Prezime naručioca"] = _table.Rows[i][1].ToString();
+                    row["Broj telefona"] = _table.Rows[i][2].ToString();
+                    row["Naziv firme"] = _table.Rows[i][3].ToString();
+                    row["Adresa firme"] = _table.Rows[i][4].ToString();
+                    tmp.Rows.Add(row);
+                }
+            }
+            if(!dataRowSelected)
+                narudzbaDataGrid.DataContext = tmp.DefaultView;
         }
 
         private DateTime getDateTime()
         {
-            String time = vrijemeIspInput.Text;
-            string[] dateTimeSplit = time.Split();
-            string[] timeSplit = dateTimeSplit[1].Split(':');
+            string[] timeSplit = combobox.Text.Split()[1].Split(':');
             int hours = Convert.ToInt32(timeSplit[0]);
             int minutes = Convert.ToInt32(timeSplit[1]);
-            return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0, DateTimeKind.Unspecified);
+            return new DateTime(DateTime.Now.Year, 
+                DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0, DateTimeKind.Unspecified);
         }
 
         private void imeInput_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -192,6 +239,39 @@ namespace Familia_Call_Centar.View
         private void vrijemeIspInput_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             vrijemeLabel.Content = "Očekivano vrijeme isporuke";
+        }
+
+        private void addComboBoxValues(String date)
+        {
+            combobox.Items.Add(date + " " + "09:00");
+            combobox.Items.Add(date + " " + "09:15");
+            combobox.Items.Add(date + " " + "09:30");
+            combobox.Items.Add(date + " " + "09:45");
+            combobox.Items.Add(date + " " + "10:00");
+            combobox.Items.Add(date + " " + "10:15");
+            combobox.Items.Add(date + " " + "10:30");
+            combobox.Items.Add(date + " " + "10:45");
+            combobox.Items.Add(date + " " + "11:00");
+            combobox.Items.Add(date + " " + "11:15");
+            combobox.Items.Add(date + " " + "11:30");
+            combobox.Items.Add(date + " " + "11:45");
+            combobox.Items.Add(date + " " + "12:00");
+            combobox.Items.Add(date + " " + "12:15");
+            combobox.Items.Add(date + " " + "12:30");
+            combobox.Items.Add(date + " " + "12:45");
+            combobox.Items.Add(date + " " + "13:00");
+            combobox.Items.Add(date + " " + "12:15");
+            combobox.Items.Add(date + " " + "12:30");
+            combobox.Items.Add(date + " " + "12:45");
+            combobox.Items.Add(date + " " + "13:00");
+            combobox.Items.Add(date + " " + "13:15");
+            combobox.Items.Add(date + " " + "13:30");
+            combobox.Items.Add(date + " " + "13:45");
+            combobox.Items.Add(date + " " + "14:00");
+            combobox.Items.Add(date + " " + "14:15");
+            combobox.Items.Add(date + " " + "14:30");
+            combobox.Items.Add(date + " " + "14:45");
+            combobox.Items.Add(date + " " + "15:00");
         }
     }
 }

@@ -15,16 +15,25 @@ namespace Familia_Call_Centar.Model
     public partial class jelo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public jelo(int jeloID, string naziv, string opis, string tip, Double cijena)
+        public jelo(string naziv, string opis, string tip, Double cijena)
         {
             this.narudzba_item = new ObservableCollection<narudzba_item>();
-            this.jeloID = jeloID;
             this.naziv = naziv;
             this.opis = opis;
             this.tip_jela = tip;
             this.cijena = cijena;
         }
-    
+
+        public jelo(int id, string naziv, string opis, string tip, Double cijena)
+        {
+            this.narudzba_item = new ObservableCollection<narudzba_item>();
+            this.jeloID = id;
+            this.naziv = naziv;
+            this.opis = opis;
+            this.tip_jela = tip;
+            this.cijena = cijena;
+        }
+
         public int jeloID { get; set; }
         public string naziv { get; set; }
         public string opis { get; set; }

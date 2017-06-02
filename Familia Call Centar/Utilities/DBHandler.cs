@@ -118,7 +118,7 @@ namespace Familia_Call_Centar.Utilities
                                    "n.ime_firme, n.adresa_firme, n.ocekivano_vrijeme_isporuke, " +
                                    "sum(n_i.ukupna_cijena) " +
                                    "from narudzba n, narudzba_item n_i " +
-                                   "where n.narudzbaID = n_i.narudzbaID and n.voznjaID = 2 " +
+                                   "where n.narudzbaID = n_i.narudzbaID and n.voznjaID = 2 and n.u_toku = 0 " +
                                    "group by n_i.narudzbaID " +
                                    "order by n.adresa_firme, n.ocekivano_vrijeme_isporuke desc";
 
@@ -198,6 +198,11 @@ namespace Familia_Call_Centar.Utilities
 
         public void loadVozilaUrls()
         {
+            //popraviti ovo da bude skalabilno
+            //
+            //
+            //
+            //
             List<String> vozilaUrls = new List<string>();
             try
             {
@@ -416,6 +421,192 @@ namespace Familia_Call_Centar.Utilities
                 connection.Close();
             }
             return jela;
+        }
+
+        public int authenticateAdmin(String password)
+        {
+            int br = 0;
+            try
+            {
+                connection.Open();
+                String statement = "SELECT * FROM roles where pass = \"" + password + "\"";
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read()) br++;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return br;
+        }
+
+        public void deleteEntry(string tip, int id, string naziv)
+        {
+            String statement = null;
+            if (tip.Equals("jelo")) statement = "Delete from jelo where naziv = \"" + naziv + "\"";
+            else if (tip.Equals("vozac")) statement = "Delete from vozac where vozacID = " + id;
+            else statement = "Delete from vozilo where voziloID = " + id;
+
+            try
+            {
+                connection.Open();
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void editJelo(string naziv, string poljeZaEdit, string vrijednost, Double cijena)
+        {
+            String statement = null;
+            if (poljeZaEdit.Equals("cijena")) statement = "update jelo set  cijena = " + cijena + " where naziv = "
+                     + " \"" + naziv + "\""; 
+            try
+            {
+                connection.Open();
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public int checkIfEntryExists(string tip, int id, string naziv)
+        {
+            int br = 0;
+            String statement = null;
+            if(tip.Equals("jelo")) statement = "SELECT * FROM jelo where naziv = \"" + naziv + "\"";
+            else if(tip.Equals("vozac")) statement = "SELECT * FROM vozac where vozacID = " + id;
+            else statement = "SELECT * FROM vozilo where voziloID = " + id;
+
+            try
+            {
+                connection.Open();
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read()) br++;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return br;
+        }
+
+        public void updateEntry(string tip, string path, int id)
+        {
+            String statement = null;
+            if (tip.Equals("jelo")) statement = "update jelo set url_slike_jela = \"" + path + "\" where jeloID = " + id;
+            else if (tip.Equals("narudzba")) statement = "update narudzba set u_toku = 1 where narudzbaID = " + id;
+            else statement = "update vozilo set url_slike_vozila = \"" + path + "\" where voziloID = " + id;
+
+            try
+            {
+                connection.Open();
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public DataTable fillDataTableJelaForStorage()
+        {
+            DataTable table = new DataTable();
+            try
+            {
+                connection.Open();
+                String statement = "Select jeloID, naziv, cijena from jelo";
+                MySqlCommand cmd = new MySqlCommand(statement, connection);
+                using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                {
+                    adapter.Fill(table);
+                }
+                cmd.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return table;
+        }
+
+        public void kreirajPredIsporuku(DataTable table)
+        {
+            String statement = null;
+            try
+            {
+                connection.Open();
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    statement = "insert into skladiste(datum, jeloID, kolicina) values"
+                        + "(\"" + DateTime.Now.Day.ToString() + "." + DateTime.Now.Month.ToString()
+                        + "." + DateTime.Now.Year.ToString() + "\", "
+                        + table.Rows[i][0] + ", " + table.Rows[i][3] + ")";
+
+                    MySqlCommand cmd = new MySqlCommand(statement, connection);
+                    cmd.CommandType = System.Data.CommandType.Text;
+                    cmd.ExecuteNonQuery();
+                    cmd.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
     }
 }

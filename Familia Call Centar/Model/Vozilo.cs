@@ -15,9 +15,12 @@ namespace Familia_Call_Centar.Model
     public partial class vozilo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public vozilo()
+        public vozilo(int id, string tip, int nosivost)
         {
             this.voznja = new ObservableCollection<voznja>();
+            this.voziloID = id;
+            this.tip_vozila = tip;
+            this.nosivost = nosivost;
         }
     
         public int voziloID { get; set; }

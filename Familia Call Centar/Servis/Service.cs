@@ -197,8 +197,8 @@ namespace Familia_Call_Centar.Servis
             StringBuilder json = new StringBuilder();
 
             json.Append("{\n");
-            json.Append("\"id_vozila\": \"" + idVozila.ToString());
-            json.Append(",\n\"tip_vozila\": \"" + tipVozila);
+            json.Append("\"id_vozila\": \"" + idVozila.ToString() + "\"");
+            json.Append(",\n\"tip_vozila\": \"" + tipVozila + "\"");
             json.Append(",\n\"narudzbe\": [\n");
 
             for (int i = 0; i < narudzbe.Rows.Count; i++)

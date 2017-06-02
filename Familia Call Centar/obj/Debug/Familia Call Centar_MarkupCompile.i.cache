@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Edin\documents\visual studio 2015\Projects\Familia Call Centar\Familia Call Centar\App.xaml
-6-1297838924
+10141765633
 2-978736121
-281222961156
-221291364394
-Startup.xaml;View\Dashboard.xaml;View\FoodPick.xaml;View\NewDelivery.xaml;View\OrderInfo.xaml;View\TransportPick.xaml;
+32-171397277
+24-488969138
+Startup.xaml;View\AddJelo.xaml;View\AddVozac.xaml;View\Dashboard.xaml;View\FillStorage.xaml;View\FoodPick.xaml;View\NewDelivery.xaml;View\OrderInfo.xaml;View\TransportPick.xaml;View\AddVozilo.xaml;
 
-True
+False
 

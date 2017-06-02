@@ -17,20 +17,42 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto" MinHeight="400"/>
+            <RowDefinition Height="Auto" MinHeight="300"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <StackPanel HorizontalAlignment="Left" MinHeight="340" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" MinWidth="100" Background="LightGray" Margin="0,0,0,59">
             <Button x:Name="pocetnaButton" Content="Početna     >" Height="57"/>
-            <Button x:Name="jelovnikButton" Content="Jelovnik     >" Height="56"/>
+            <Button x:Name="jelovnikButton" Content="Jelovnik     >" Height="56" Click="jelovnikButton_Click"/>
             <Button x:Name="narudzbeButton" Content="Narudžbe   >" Height="57"/>
             <Button x:Name="dostaveButton" Content="Dostave     >" Height="57"/>
-            <Button x:Name="vozilaButton" Content="Vozila       >" Height="57"/>
-            <Button x:Name="vozaciButton" Content="Vozači       >" Height="57"/>
+            <Button x:Name="vozilaButton" Content="Vozila       >" Height="57" Click="vozilaButton_Click"/>
+            <Button x:Name="vozaciButton" Content="Vozači       >" Height="57" Click="vozaciButton_Click"/>
         </StackPanel>
         <Button x:Name="zaprimiNaruzbuButton" Content="Zaprimi novu narudžbu" Grid.Column="1" Grid.Row="1" Background="#0844A6" Foreground="White" HorizontalAlignment="Left" Margin="105,289,0,0" VerticalAlignment="Top" Width="151" Height="41" Click="zaprimiNaruzbuButton_Click"/>
         <Button x:Name="pokreniDostavu" Content="Pokreni novu dostavu" Grid.Column="1" Grid.Row="1" Background="#0844A6" Foreground="White" HorizontalAlignment="Left" Margin="275,289,0,0" VerticalAlignment="Top" Width="151" Height="41" Click="pokreniDostavu_Click" />
+
+        <Grid x:Name="InputBox" Visibility="Collapsed" Grid.Column="1" Grid.Row="1">
+            <Grid Background="Black" Opacity="0.5"/>
+            <Border
+            MinWidth="250"
+            Background="LightBlue" 
+            BorderBrush="Black" 
+            BorderThickness="1" 
+            CornerRadius="0,55,0,55" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Margin="5" Text="Administratorska lozinka:" FontFamily="Cambria" />
+                    <PasswordBox MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="InputTextBox"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="Confirm" Margin="5" Content="Potvrdi" Background="{x:Null}" Click="Confirm_Click"/>
+                        <Button x:Name="Cancel" Margin="5" Content="Poništi" Background="{x:Null}" Click="Cancel_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Button x:Name="napuniSkladiste" Content="Napuni skladište" Grid.Column="1" Grid.Row="1" Background="#0844A6" Foreground="White" HorizontalAlignment="Left" Margin="444,289,0,0" VerticalAlignment="Top" Width="151" Height="41" Click="napuniSkladiste_Click" />
 
     </Grid>
 </Page>

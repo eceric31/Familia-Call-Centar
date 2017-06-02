@@ -15,9 +15,13 @@ namespace Familia_Call_Centar.Model
     public partial class vozac
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public vozac()
+        public vozac(string ime, string prezime, int id, string pass)
         {
             this.voznja = new ObservableCollection<voznja>();
+            this.ime = ime;
+            this.prezime = prezime;
+            this.vozacID = id;
+            this.passsword = pass;
         }
     
         public int vozacID { get; set; }
