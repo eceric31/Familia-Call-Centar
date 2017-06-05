@@ -9,40 +9,46 @@
       Title="FoodPick">
 
     <Grid Background="White">
-        <Frame x:Name="frame" HorizontalAlignment="Left" Height="309" BorderBrush="Black" BorderThickness="1" Background="LightGray" Opacity="0.5" Margin="10,10,0,0" VerticalAlignment="Top" Width="136"/>
-        <Label x:Name="jelo" Content="Jelo" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,47,0,0" Width="61"/>
-        <Label x:Name="novaNarudzba" Content="Nova narudžba" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" BorderBrush="Black" VerticalAlignment="Top" Width="117"/>
-        <Label x:Name="kolicina" Content="Količina" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="61,47,0,0" Width="66"/>
-        <Label x:Name="odaberiteJela" Content="Odaberite jela" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="151,10,0,0" BorderBrush="Black" VerticalAlignment="Top" Width="117"/>
-        <ScrollViewer Name="scroller"  HorizontalAlignment="Left" BorderBrush="Gray" BorderThickness="1" Height="155" Margin="151,47,0,0" VerticalAlignment="Top" Width="462">
-            <Grid Height="155" Width="462">
-                <Image x:Name="slika1" HorizontalAlignment="Left" Height="90" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" d:LayoutOverrides="VerticalAlignment" MouseDown="slika1_MouseDown"/>
-                <Image x:Name="slika2" Margin="162,10,180,55" Height="90" Width="120" MouseDown="slika2_MouseDown"/>
-                <Image x:Name="slika3" Margin="0,10,28,55" Height="90" Width="120" HorizontalAlignment="Right" d:LayoutOverrides="Width" MouseDown="slika3_MouseDown"/>
-                <TextBox x:Name="kolicina1" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="120" Margin="10,100,0,29" HorizontalContentAlignment="Center" TextChanged="kolicina1_TextChanged"/>
-                <TextBox x:Name="kolicina2" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="162,100,0,29" Width="120" Height="26" HorizontalContentAlignment="Center" TextChanged="kolicina2_TextChanged"/>
-                <TextBox x:Name="kolicina3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0,0,28,29" VerticalAlignment="Bottom" Width="120" Height="26" TextChanged="kolicina3_TextChanged"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Name="scroller" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Right" BorderBrush="Gray" BorderThickness="1" Height="180" Margin="0,22,0,0" VerticalAlignment="Top" Width="462" CanContentScroll="True" HorizontalScrollBarVisibility="Auto">
+            <Grid x:Name="scrollGrid" Height="300" Width="462" ShowGridLines="False" ScrollViewer.CanContentScroll="False">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
             </Grid>
         </ScrollViewer>
-        <RichTextBox x:Name="opisJela" HorizontalAlignment="Left" Height="100" Margin="151,219,0,0" VerticalAlignment="Top" Width="200">
+        <RichTextBox x:Name="opisJela" HorizontalAlignment="Left" Height="100" Grid.Column="1" Grid.Row="1" Margin="151,219,0,0" VerticalAlignment="Top" Width="200">
             <FlowDocument>
                 <Paragraph>
                     <Run />
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <ScrollViewer HorizontalAlignment="Left" Height="241" Margin="10,78,0,0" VerticalAlignment="Top" Width="136">
-            <Grid Height="241" Width="125">
-                <Label x:Name="jelo1" HorizontalContentAlignment="Center" Content="Jelo1" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="58"/>
-                <Label x:Name="jelo1Kolicina" Content="Količina1" HorizontalAlignment="Left" Margin="58,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
-                <Label x:Name="jelo2" HorizontalContentAlignment="Center" Content="Jelo2" HorizontalAlignment="Left" Margin="0,49,0,0" VerticalAlignment="Top" Width="58"/>
-                <Label x:Name="jelo2Kolicina" Content="Količina2" HorizontalAlignment="Left" Margin="58,49,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
-                <Label x:Name="jelo3" HorizontalContentAlignment="Center" Content="Jelo3" HorizontalAlignment="Left" Margin="0,92,0,0" Width="58" VerticalAlignment="Top"/>
-                <Label x:Name="jelo3Kolicina" Content="Količina3" HorizontalAlignment="Left" Margin="57.673,92,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
+        <ScrollViewer x:Name="stanjeJela" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Height="253" Margin="10,56,0,0" VerticalAlignment="Top" Width="136"  CanContentScroll="True" HorizontalScrollBarVisibility="Auto">
+            <Grid x:Name="stanjeJelaGrid" Height="262" Width="136" ScrollViewer.CanContentScroll="False" ShowGridLines="False">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
             </Grid>
         </ScrollViewer>
-        <Button x:Name="button" Content="Spasi" Background="#0844A6" Foreground="White" HorizontalAlignment="Left" Margin="538,293,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="button_Click"/>
-        <Button x:Name="clear" Content="Očisti" HorizontalAlignment="Left" Margin="442,293,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="clear_Click"/>
+        <Button x:Name="button" Content="Spasi" Background="#0844A6" Foreground="White" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="538,293,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="button_Click"/>
+        <Button x:Name="clear" Content="Očisti" HorizontalAlignment="Left" Margin="442,293,0,0" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="26" Click="clear_Click"/>
+        <Label x:Name="jeloL" Content="Jelo" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="10,25,0,0" Grid.Row="1" VerticalAlignment="Top" Width="47"/>
+        <Label x:Name="kolicinaL" Content="Količina" Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="62,25,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.481,0.507" Width="65"/>
 
     </Grid>
 </Page>

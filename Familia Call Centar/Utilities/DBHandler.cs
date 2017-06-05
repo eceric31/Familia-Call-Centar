@@ -24,7 +24,7 @@ namespace Familia_Call_Centar.Utilities
             try
             {
                 connection.Open();
-                String statement = "SELECT * FROM testna.jelo";
+                String statement = "SELECT * FROM jelo";
                 MySqlCommand cmd = new MySqlCommand(statement, connection);
                 cmd.CommandType = System.Data.CommandType.Text;
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -53,7 +53,7 @@ namespace Familia_Call_Centar.Utilities
             try
             {
                 connection.Open();
-                String statement = "SELECT * FROM testna.narudzba";
+                String statement = "SELECT * FROM narudzba";
                 MySqlCommand cmd = new MySqlCommand(statement, connection);
                 cmd.CommandType = System.Data.CommandType.Text;
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -118,7 +118,7 @@ namespace Familia_Call_Centar.Utilities
                                    "n.ime_firme, n.adresa_firme, n.ocekivano_vrijeme_isporuke, " +
                                    "sum(n_i.ukupna_cijena) " +
                                    "from narudzba n, narudzba_item n_i " +
-                                   "where n.narudzbaID = n_i.narudzbaID and n.voznjaID = 2 and n.u_toku = 0 " +
+                                   "where n.narudzbaID = n_i.narudzbaID and n.voznjaID = 2 and n.status_narudzbe = 0 " +
                                    "group by n_i.narudzbaID " +
                                    "order by n.adresa_firme, n.ocekivano_vrijeme_isporuke desc";
 
@@ -165,13 +165,13 @@ namespace Familia_Call_Centar.Utilities
             }
         }
 
-        public void loadJelaUrls()
+        public List<string> loadJelaUrls()
         {
             List<String> jelaUrls = new List<string>();
             try
             {
                 connection.Open();
-                String statement = "SELECT url_slike_jela FROM testna.jelo";
+                String statement = "SELECT url_slike_jela FROM jelo";
                 MySqlCommand cmd = new MySqlCommand(statement, connection);
                 cmd.CommandType = System.Data.CommandType.Text;
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -181,9 +181,6 @@ namespace Familia_Call_Centar.Utilities
                 }
 
                 reader.Dispose();
-                Res.grahUri = jelaUrls[0];
-                Res.kobasiceUri = jelaUrls[1];
-                Res.sarmaUri = jelaUrls[2];
             }
             catch (Exception ex)
             {
@@ -194,15 +191,11 @@ namespace Familia_Call_Centar.Utilities
             {
                 connection.Close();
             }
+            return jelaUrls;
         }
 
         public void loadVozilaUrls()
         {
-            //popraviti ovo da bude skalabilno
-            //
-            //
-            //
-            //
             List<String> vozilaUrls = new List<string>();
             try
             {
@@ -527,11 +520,12 @@ namespace Familia_Call_Centar.Utilities
             return br;
         }
 
-        public void updateEntry(string tip, string path, int id)
+        public void updateEntry(string tip, string path, int id, int status)
         {
             String statement = null;
             if (tip.Equals("jelo")) statement = "update jelo set url_slike_jela = \"" + path + "\" where jeloID = " + id;
-            else if (tip.Equals("narudzba")) statement = "update narudzba set u_toku = 1 where narudzbaID = " + id;
+            else if (tip.Equals("narudzba")) statement = "update narudzba set status_narudzbe = " 
+                    + status + " where narudzbaID = " + id;
             else statement = "update vozilo set url_slike_vozila = \"" + path + "\" where voziloID = " + id;
 
             try

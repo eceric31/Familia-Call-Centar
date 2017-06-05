@@ -86,7 +86,7 @@ namespace Familia_Call_Centar.View
                 service.Narudzbe = isporukaTable;
 
                 for(int i = 0; i < isporukaTable.Rows.Count; i++)
-                    handler.updateEntry("narudzba", null, Convert.ToInt32(isporukaTable.Rows[i][7]));
+                    handler.updateEntry("narudzba", null, Convert.ToInt32(isporukaTable.Rows[i][7]), 1);
 
                 Page dash = new Dashboard(service);
                 NavigationService.Navigate(dash);

@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Familia_Call_Centar.Utilities;
 using Familia_Call_Centar.Model;
 using Familia_Call_Centar.Servis;
+using System.Windows.Media.Imaging;
 
 namespace Familia_Call_Centar.View
 {
@@ -19,13 +20,20 @@ namespace Familia_Call_Centar.View
         int narudzbaID;
         FamiliaContextClass db;
         List<jelo> jela;
+        List<string> urls;
         TextRange tr;
         DBHandler dbHandler;
         Service service;
+        List<TextBox> tbs = new List<TextBox>();
+        List<Image> imgs = new List<Image>();
+        List<int> tbIndexes = new List<int>();
+        List<int> tbEntries = new List<int>();
+        List<Label> kolicine = new List<Label>();
 
         public FoodPick(int nID, Service service)
         {
             InitializeComponent();
+
             this.service = service;
             narudzbaID = nID;
             //inicijalizacija resursa
@@ -33,65 +41,43 @@ namespace Familia_Call_Centar.View
             db = new FamiliaContextClass();
             dbHandler = new DBHandler();
             tr = new TextRange(opisJela.Document.ContentStart, opisJela.Document.ContentEnd);
-            //prikazivanje slika
-            dbHandler.loadJelaUrls();
-            slika1.Source = Res.addGrahImage();
-            slika2.Source = Res.addKobasiceImage();
-            slika3.Source = Res.addSarmaImage();
             //ucitavanje jela iz baze
             jela = dbHandler.loadJela();
-            //prikazivanje jela u labelama
-            jelo1.Content = jela[0].naziv;
-            jelo2.Content = jela[1].naziv;
-            jelo3.Content = jela[2].naziv;
+            urls = dbHandler.loadJelaUrls();
+            //scroll view jela
+            createScroll();
+            //scroll view kolicine jela
+            createScrollForDishes();
         }
 
         private void saveOrderItems()
         {
-            List<narudzba_item> items = new List<narudzba_item>();
-            
-            if(!String.IsNullOrEmpty(kolicina1.Text))
-            {
-                jelo j = jela.Find(item => item.naziv == "Grah");
-                int kol = Convert.ToInt32(kolicina1.Text);
+            List<int> indexCopies = new List<int>();
+            List<int> entryCopies = new List<int>();
 
+            for (int i = tbIndexes.Count - 1; i >= 0; i--) {
+                if (!indexCopies.Contains(tbIndexes[i]))
+                {
+                    indexCopies.Add(tbIndexes[i]);
+                    entryCopies.Add(tbEntries[i]);
+                }
+            }
+
+            for(int i = 0; i < indexCopies.Count; i++)
+            {
+                jelo j = jela[indexCopies[i]];
+                int kol = entryCopies[i];
                 db.narudzba_item.Add(new narudzba_item(kol, (Double)(j.cijena * kol),
                     j.jeloID, narudzbaID));
-
                 saveChanges();
             }
-            if (!String.IsNullOrEmpty(kolicina2.Text))
-            {
-                jelo j = jela.Find(item => item.naziv == "Kobasice");
-                int kol = Convert.ToInt32(kolicina2.Text);
-
-                db.narudzba_item.Add(new narudzba_item(kol, (Double)(j.cijena * kol),
-                    j.jeloID, narudzbaID));
-
-                saveChanges();
-            }
-            if (!String.IsNullOrEmpty(kolicina3.Text))
-            {
-                jelo j = jela.Find(item => item.naziv == "Sarma");
-                int kol = Convert.ToInt32(kolicina3.Text);
-
-                db.narudzba_item.Add(new narudzba_item(kol, (Double)(j.cijena * kol),
-                    j.jeloID, narudzbaID));
-
-                saveChanges();
-            }
-            //sad za sad tri jela
         } 
         
         private void clear_Click(object sender, RoutedEventArgs e)
         {
-            kolicina1.Clear();
-            kolicina2.Clear();
-            kolicina3.Clear();
             tr.Text = "";
-            jelo1Kolicina.Content = "";
-            jelo2Kolicina.Content = "";
-            jelo3Kolicina.Content = "";
+            tbIndexes.Clear();
+            tbEntries.Clear();
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -99,36 +85,6 @@ namespace Familia_Call_Centar.View
             saveOrderItems();
             Page dash = new Dashboard(service);
             NavigationService.Navigate(dash);
-        }
-
-        private void kolicina1_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            jelo1Kolicina.Content = kolicina1.Text;
-        }
-
-        private void kolicina2_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            jelo2Kolicina.Content = kolicina2.Text;
-        }
-
-        private void kolicina3_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            jelo3Kolicina.Content = kolicina3.Text;
-        }
-
-        private void slika1_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            tr.Text = jela.Find(item => item.naziv == "Grah").opis;
-        }
-
-        private void slika2_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            tr.Text = jela.Find(item => item.naziv == "Kobasice").opis;
-        }
-
-        private void slika3_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            tr.Text = jela.Find(item => item.naziv == "Sarma").opis;
         }
 
         private void saveChanges()
@@ -141,10 +97,105 @@ namespace Familia_Call_Centar.View
             }
         }
 
-        private void populateScroll()
+        private void createScroll()
         {
+            int colNum = 0;
+            int rowNum = 0;
+            RowDefinition def = new RowDefinition();
+            def.MinHeight = 130;
+            scrollGrid.RowDefinitions.Add(def);
 
+            for (int i = 0; i < urls.Count; i++)
+            {
+                if (colNum == 3) {
+                    RowDefinition rowDef = new RowDefinition();
+                    rowDef.MinHeight = 120;
+                    scrollGrid.RowDefinitions.Add(rowDef);
+                    colNum = 0;
+                    rowNum++;
+                    i--;
+                    continue;
+                }
+                
+                Image img = new Image();
+                img.Height = 110;
+                img.Width = 140;
+                img.Margin = new Thickness(5);
+                img.VerticalAlignment = VerticalAlignment.Top;
+                img.Source = Res.addImage(urls[i]);
+                scrollGrid.Children.Add(img);
+                Grid.SetRow(img, rowNum);
+                Grid.SetColumn(img, colNum);
+                imgs.Add(img);
+
+                TextBox tb = new TextBox();
+                tb.HorizontalContentAlignment = HorizontalAlignment.Center;
+                tb.VerticalContentAlignment = VerticalAlignment.Center;
+                tb.Height = 26;
+                tb.Width = 140;
+                tb.VerticalAlignment = VerticalAlignment.Bottom;
+                tb.Margin = new Thickness(5);
+                tb.Padding = new Thickness(5);
+                scrollGrid.Children.Add(tb);
+                Grid.SetRow(tb, rowNum);
+                Grid.SetColumn(tb, colNum);
+                tb.TextChanged += textChanged;
+                tbs.Add(tb);
+                
+                colNum++;
+            }
         }
 
+        private void createScrollForDishes()
+        {
+            for (int i = 0; i < jela.Count; i++)
+            {
+                RowDefinition def = new RowDefinition();
+                def.Height = GridLength.Auto;
+                stanjeJelaGrid.RowDefinitions.Add(def);
+
+                Label tb = new Label();
+                tb.HorizontalContentAlignment = HorizontalAlignment.Left;
+                tb.Height = 26;
+                tb.Width = 60;
+                tb.Content = jela[i].naziv;
+                stanjeJelaGrid.Children.Add(tb);
+                Grid.SetRow(tb, i);
+                Grid.SetColumn(tb, 0);
+
+                Label kolicina = new Label();
+                kolicina.Height = 26;
+                kolicina.Width = 60;
+                stanjeJelaGrid.Children.Add(kolicina);
+                Grid.SetRow(kolicina, i);
+                Grid.SetColumn(kolicina, 1);
+                kolicine.Add(kolicina);
+            }
+        }        
+
+        private void textChanged(object sender, TextChangedEventArgs e)
+        {
+            var tb = sender as TextBox;
+            int index = Grid.GetRow(tb) * 3 + Grid.GetColumn(tb);
+            int value;
+
+            if (String.IsNullOrEmpty(tb.Text))
+            {
+                tbIndexes.Add(index);
+                tbEntries.Add(0);
+                kolicine[index].Content = "";
+            }
+            else if(Int32.TryParse(tb.Text, out value))
+            {
+                tbIndexes.Add(index);
+                tbEntries.Add(value);
+                kolicine[index].Content = value.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Nevalidna količina hrane!");
+            }
+            tr.Text = jela[index].opis;
+        }
     }
 }

@@ -36,13 +36,22 @@ namespace Familia_Call_Centar.View
             db = new FamiliaContextClass();
             handler = new DBHandler();
 
-            _table = handler.fillDataTable();
-            _table.Columns[0].ColumnName = "Ime naručioca";
-            _table.Columns[1].ColumnName = "Prezime naručioca";
-            _table.Columns[2].ColumnName = "Broj telefona";
-            _table.Columns[3].ColumnName = "Naziv firme";
-            _table.Columns[4].ColumnName = "Adresa firme";
-            narudzbaDataGrid.DataContext = _table.DefaultView;
+            try
+            {
+                _table = handler.fillDataTable();
+                _table.Columns[0].ColumnName = "Ime naručioca";
+                _table.Columns[1].ColumnName = "Prezime naručioca";
+                _table.Columns[2].ColumnName = "Broj telefona";
+                _table.Columns[3].ColumnName = "Naziv firme";
+                _table.Columns[4].ColumnName = "Adresa firme";
+                narudzbaDataGrid.DataContext = _table.DefaultView;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Greška, server baze podataka nije u funkciji!");
+                Page dash = new Dashboard(service);
+                NavigationService.Navigate(dash);
+            }
 
             addComboBoxValues(date);
         }
@@ -64,12 +73,18 @@ namespace Familia_Call_Centar.View
                 }
                 else
                 {
-                    save();
+                    if(!String.IsNullOrEmpty(combobox.Text))
+                        save();
+                    else
+                        MessageBox.Show("Unesite očekivano vrijeme isporuke!");
                 }
             }
             else
             {
-                save();
+                if (!String.IsNullOrEmpty(combobox.Text))
+                    save();
+                else
+                    MessageBox.Show("Unesite očekivano vrijeme isporuke!");
             }
         }
 
@@ -84,7 +99,6 @@ namespace Familia_Call_Centar.View
             {
                 narudzba = new narudzba(imeInput.Text, prezimeInput.Text, brTelInput.Text, firmaInput.Text, adresaInput.Text,
                     getDateTime());
-                
             }
             saveOrder();
             Page foodPicker = new FoodPick(narudzba.narudzbaID, service);
@@ -104,6 +118,7 @@ namespace Familia_Call_Centar.View
             {
                 db.SaveChanges();
                 handler.updateOcekivanoVrijemeIsporuke(getDateTime(), narudzba.narudzbaID);
+                handler.updateEntry("narudzba", null, narudzba.narudzbaID, 0);
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException e)
             {
@@ -171,7 +186,7 @@ namespace Familia_Call_Centar.View
                 firmaInput.Text = firma;
                 adresaInput.Text = adresa;
 
-                MessageBox.Show("Molimo unesite očekivano vrijeme isporuke");
+                MessageBox.Show("Unesite očekivano vrijeme isporuke!");
             }
         }
 

@@ -74,7 +74,7 @@ namespace Familia_Call_Centar.View
                                     Console.WriteLine(ex.InnerException);
                                 }
                             }
-                            handler.updateEntry("jelo", path, j.jeloID);
+                            handler.updateEntry("jelo", path, j.jeloID, -1);
                             path = null;
                             Page dash = new Dashboard(service);
                             NavigationService.Navigate(dash);
