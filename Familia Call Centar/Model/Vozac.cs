@@ -10,26 +10,32 @@
 namespace Familia_Call_Centar.Model
 {
     using System;
-    using System.Collections.ObjectModel;
+    using System.Collections.Generic;
     
     public partial class vozac
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public vozac()
+        {
+            this.voznja = new HashSet<voznja>();
+        }
+
         public vozac(string ime, string prezime, int id, string pass)
         {
-            this.voznja = new ObservableCollection<voznja>();
+            this.voznja = new HashSet<voznja>();
             this.ime = ime;
             this.prezime = prezime;
             this.vozacID = id;
             this.passsword = pass;
         }
-    
+
+
         public int vozacID { get; set; }
         public string ime { get; set; }
         public string prezime { get; set; }
         public string passsword { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ObservableCollection<voznja> voznja { get; set; }
+        public virtual ICollection<voznja> voznja { get; set; }
     }
 }

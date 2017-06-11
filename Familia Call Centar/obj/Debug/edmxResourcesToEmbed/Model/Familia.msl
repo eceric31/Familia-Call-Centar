@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="familiaModelStoreContainer" CdmEntityContainer="FamiliaContextClass">
+  <EntityContainerMapping StorageEntityContainer="testnaModelStoreContainer" CdmEntityContainer="FamiliaContextClass">
     <EntitySetMapping Name="jelo">
-      <EntityTypeMapping TypeName="familiaModel.jelo">
+      <EntityTypeMapping TypeName="testnaModel.jelo">
         <MappingFragment StoreEntitySet="jelo">
           <ScalarProperty Name="jeloID" ColumnName="jeloID" />
           <ScalarProperty Name="naziv" ColumnName="naziv" />
           <ScalarProperty Name="opis" ColumnName="opis" />
           <ScalarProperty Name="tip_jela" ColumnName="tip_jela" />
           <ScalarProperty Name="cijena" ColumnName="cijena" />
+          <ScalarProperty Name="url_slike_jela" ColumnName="url_slike_jela" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="narudzba">
-      <EntityTypeMapping TypeName="familiaModel.narudzba">
+      <EntityTypeMapping TypeName="testnaModel.narudzba">
         <MappingFragment StoreEntitySet="narudzba">
           <ScalarProperty Name="narudzbaID" ColumnName="narudzbaID" />
           <ScalarProperty Name="ime_narucioca" ColumnName="ime_narucioca" />
@@ -24,11 +25,13 @@
           <ScalarProperty Name="ocekivano_vrijeme_isporuke" ColumnName="ocekivano_vrijeme_isporuke" />
           <ScalarProperty Name="vrijeme_isporuke" ColumnName="vrijeme_isporuke" />
           <ScalarProperty Name="voznjaID" ColumnName="voznjaID" />
+          <ScalarProperty Name="status_narudzbe" ColumnName="status_narudzbe" />
+          <ScalarProperty Name="odgovorni_vozac" ColumnName="odgovorni_vozac" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="narudzba_item">
-      <EntityTypeMapping TypeName="familiaModel.narudzba_item">
+      <EntityTypeMapping TypeName="testnaModel.narudzba_item">
         <MappingFragment StoreEntitySet="narudzba_item">
           <ScalarProperty Name="narudzba_itemID" ColumnName="narudzba_itemID" />
           <ScalarProperty Name="kvantitet" ColumnName="kvantitet" />
@@ -38,8 +41,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="roles">
+      <EntityTypeMapping TypeName="testnaModel.roles">
+        <MappingFragment StoreEntitySet="roles">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="pass" ColumnName="pass" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="vozac">
-      <EntityTypeMapping TypeName="familiaModel.vozac">
+      <EntityTypeMapping TypeName="testnaModel.vozac">
         <MappingFragment StoreEntitySet="vozac">
           <ScalarProperty Name="vozacID" ColumnName="vozacID" />
           <ScalarProperty Name="ime" ColumnName="ime" />
@@ -49,16 +61,17 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="vozilo">
-      <EntityTypeMapping TypeName="familiaModel.vozilo">
+      <EntityTypeMapping TypeName="testnaModel.vozilo">
         <MappingFragment StoreEntitySet="vozilo">
           <ScalarProperty Name="voziloID" ColumnName="voziloID" />
           <ScalarProperty Name="tip_vozila" ColumnName="tip_vozila" />
           <ScalarProperty Name="nosivost" ColumnName="nosivost" />
+          <ScalarProperty Name="url_slike_vozila" ColumnName="url_slike_vozila" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="voznja">
-      <EntityTypeMapping TypeName="familiaModel.voznja">
+      <EntityTypeMapping TypeName="testnaModel.voznja">
         <MappingFragment StoreEntitySet="voznja">
           <ScalarProperty Name="voznjaID" ColumnName="voznjaID" />
           <ScalarProperty Name="voziloID" ColumnName="voziloID" />
@@ -67,7 +80,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="checkpoint">
-      <EntityTypeMapping TypeName="familiaModel.checkpoint">
+      <EntityTypeMapping TypeName="testnaModel.checkpoint">
         <MappingFragment StoreEntitySet="checkpoint">
           <ScalarProperty Name="longitude" ColumnName="longitude" />
           <ScalarProperty Name="latitude" ColumnName="latitude" />
@@ -77,7 +90,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="lokacija">
-      <EntityTypeMapping TypeName="familiaModel.lokacija">
+      <EntityTypeMapping TypeName="testnaModel.lokacija">
         <MappingFragment StoreEntitySet="lokacija">
           <ScalarProperty Name="longitude" ColumnName="longitude" />
           <ScalarProperty Name="latitude" ColumnName="latitude" />

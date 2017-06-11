@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Familia_Call_Centar.Utilities;
 using System.Collections.Specialized;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Familia_Call_Centar.Servis
 {
@@ -60,7 +63,16 @@ namespace Familia_Call_Centar.Servis
                     if (reqValues[0].Equals("isporuka") && (String.IsNullOrEmpty(TipVozila) || narudzbe.Rows.Count == 0))
                         await Task.Factory.StartNew(() => handleEmptyData(context));
                     else if (reqValues[0].Equals("isporuka") && !(String.IsNullOrEmpty(TipVozila) || narudzbe.Rows.Count == 0))
-                        await Task.Factory.StartNew(() => handleIsporuka(context, Convert.ToInt32(reqValues[1])));
+                        await Task.Factory.StartNew(() => handleIsporuka(context));
+                    else if (reqValues[0].Equals("otkazano"))
+                        await Task.Factory.StartNew(() => handleDelivery(context, "otkazano", 
+                            Convert.ToInt32(reqValues[1]), 3, Convert.ToInt32(reqValues[2])));
+                    else if (reqValues[0].Equals("izmijenjeno"))
+                        await Task.Factory.StartNew(() => handleDelivery(context, "izmijenjeno", 
+                            Convert.ToInt32(reqValues[1]), 2, Convert.ToInt32(reqValues[2])));
+                    else if (reqValues[0].Equals("dostavljeno"))
+                        await Task.Factory.StartNew(() => handleDelivery(context, "dostavljeno", -1, 2, 
+                            Convert.ToInt32(reqValues[1])));
                 }
             }
         }
@@ -78,10 +90,70 @@ namespace Familia_Call_Centar.Servis
 
             if (values.Contains("login")) requestData = values[0] + " " + values[1] + " " + values[2];
             else if (values.Contains("isporuka")) requestData = values[0] + " " + values[1];
+            else if (values.Contains("otkazano") || values.Contains("izmijenjeno"))
+                requestData = values[0] + " " + values[1] + " " + values[2];
+            else if (values.Contains("dostavljeno")) requestData = values[0] + " " + values[1];
 
             Console.WriteLine("Url parameters: " + requestData);
 
             return requestData;
+        }
+
+        private async void handleDelivery(HttpListenerContext ctx, string type, 
+            int deliveryID, int deliveryStatus, int driverID)
+        {
+            try
+            {
+                if (type.Equals("otkazano"))
+                {
+                    handler.updateEntry("narudzba", null, deliveryID, deliveryStatus);
+                }
+                else
+                {
+                    var requestContent = ctx.Request.InputStream;
+                    string body = null;
+                    using (StreamReader reader = new StreamReader(requestContent, Encoding.BigEndianUnicode, true, 1024, true))
+                    {
+                        body = reader.ReadToEnd();
+                    }
+
+                    if (type.Equals("izmijenjeno"))
+                    {
+                        JObject json = JObject.Parse(body);
+                        List<JProperty> jsonJela = json.Properties().ToList();
+                        List<JToken> jsonKolicine = json.PropertyValues().ToList();
+                        for(int i = 0; i < jsonJela.Count(); i++)
+                        {
+                            handler.updateEntry("izmjena_kolicina",
+                                 jsonJela[i].Name, deliveryID, jsonKolicine[i].Value<int>());
+                        }
+                    }
+                    else
+                    {
+                        JArray json = JArray.Parse(body);
+                        List<JToken> vals = json.Children().ToList();
+                        foreach(var val in vals)
+                        {
+                            handler.updateEntry("narudzba", null, Convert.ToInt32(val), deliveryStatus);
+                            handler.updateEntry("odgovorni_vozac", null, Convert.ToInt32(val), driverID);
+                            handler.updateEntry("vrijeme_isporuke", getDateTime(), Convert.ToInt32(val), -1);
+                        }
+                    }
+                }
+                handler.updateEntry("odgovorni_vozac", null, deliveryID, driverID);
+
+                var output = ctx.Response.OutputStream;
+                ctx.Response.StatusCode = 200;
+                byte[] empty = new byte[0];
+                await output.WriteAsync(empty, 0, 0);
+                await output.FlushAsync();
+                output.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.InnerException);
+            }
         }
 
         private async void handleEmptyData(HttpListenerContext ctx)
@@ -122,12 +194,12 @@ namespace Familia_Call_Centar.Servis
             }
         }
 
-        private async void handleIsporuka(HttpListenerContext ctx, int id)
+        private async void handleIsporuka(HttpListenerContext ctx)
         {
             try
             {
                 var output = ctx.Response.OutputStream;
-                byte[] json = Encoding.ASCII.GetBytes(toJson());
+                byte[] json = Encoding.BigEndianUnicode.GetBytes(toJson());
                 await output.WriteAsync(json, 0, json.Length);
                 await output.FlushAsync();
                 output.Dispose();
@@ -212,15 +284,20 @@ namespace Familia_Call_Centar.Servis
                 json.Append("\"adresa\": \"" + narudzbe.Rows[i][4].ToString() + "\",\n");
                 json.Append("\"ocekivano_vrijeme_isporuke\": \"" + narudzbe.Rows[i][5].ToString() + "\",\n");
                 json.Append("\"jela\":[\n");
+
                 for (int j = 0; j < jela.Rows.Count; j++)
                 {
-                    if (Convert.ToInt32(jela.Rows[j][2]).Equals(Convert.ToInt32(narudzbe.Rows[i][7].ToString()))) 
+                    if (Convert.ToInt32(jela.Rows[j][2]).Equals(Convert.ToInt32(narudzbe.Rows[i][7].ToString())))
                     {
                         json.Append("{\n");
 
                         json.Append("\"naziv_jela\": \"" + jela.Rows[j][0].ToString() + "\",\n");
                         json.Append("\"kvantitet\": \"" + jela.Rows[j][1].ToString() + "\"\n");
-                        if (j == jela.Rows.Count - 1) json.Append("}\n");
+                        if ((j == jela.Rows.Count - 1) || 
+                            (!Convert.ToInt32(jela.Rows[j][2]).Equals(Convert.ToInt32(jela.Rows[j + 1][2]))))
+                        {
+                            json.Append("}\n");
+                        }
                         else json.Append("},\n");
                     }
                 }
@@ -236,6 +313,13 @@ namespace Familia_Call_Centar.Servis
             tipVozila = null;
             narudzbe.Clear();
             jela.Clear();
+        }
+
+        private String getDateTime()
+        {
+            return new DateTime(DateTime.Now.Year,
+                DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 
+                DateTime.Now.Minute, 0, DateTimeKind.Unspecified).ToString();
         }
     }
 }

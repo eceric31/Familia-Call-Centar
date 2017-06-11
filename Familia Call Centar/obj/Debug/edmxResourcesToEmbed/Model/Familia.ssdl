@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="familiaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="testnaModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <!--Errors Found During Generation:
 warning 6002: The table/view 'def.testna.checkpoint' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="checkpoint">
@@ -7,12 +7,11 @@ warning 6002: The table/view 'def.testna.checkpoint' does not have a primary key
       <PropertyRef Name="longitude" />
       <PropertyRef Name="latitude" />
       <PropertyRef Name="vrijeme_isporuke" />
-      <PropertyRef Name="voznjaID" />
     </Key>
     <Property Name="longitude" Type="double" Nullable="false" />
     <Property Name="latitude" Type="double" Nullable="false" />
     <Property Name="vrijeme_isporuke" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="voznjaID" Type="int" Nullable="false" />
+    <Property Name="voznjaID" Type="int" />
   </EntityType>
   <EntityType Name="jelo">
     <Key>
@@ -23,6 +22,7 @@ warning 6002: The table/view 'def.testna.checkpoint' does not have a primary key
     <Property Name="opis" Type="varchar" MaxLength="100" />
     <Property Name="tip_jela" Type="varchar" MaxLength="100" />
     <Property Name="cijena" Type="double" />
+    <Property Name="url_slike_jela" Type="varchar" MaxLength="255" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'def.testna.lokacija' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -48,9 +48,11 @@ warning 6002: The table/view 'def.testna.lokacija' does not have a primary key d
     <Property Name="broj_telefona_narucioca" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="ime_firme" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="adresa_firme" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="ocekivano_vrijeme_isporuke" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="vrijeme_isporuke" Type="timestamp" Precision="0" Nullable="false" />
-    <Property Name="voznjaID" Type="int" Nullable="false" />
+    <Property Name="ocekivano_vrijeme_isporuke" Type="varchar" MaxLength="50" />
+    <Property Name="vrijeme_isporuke" Type="varchar" MaxLength="50" />
+    <Property Name="voznjaID" Type="int" />
+    <Property Name="status_narudzbe" Type="int" />
+    <Property Name="odgovorni_vozac" Type="int" />
   </EntityType>
   <EntityType Name="narudzba_item">
     <Key>
@@ -62,6 +64,21 @@ warning 6002: The table/view 'def.testna.lokacija' does not have a primary key d
     <Property Name="jeloID" Type="int" Nullable="false" />
     <Property Name="narudzbaID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="roles">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="role" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="pass" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'def.testna.skladiste' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="skladiste">
+          <Property Name="datum" Type="varchar" MaxLength="50" />
+          <Property Name="jeloID" Type="int" />
+          <Property Name="kolicina" Type="int" />
+        </EntityType>-->
   <EntityType Name="vozac">
     <Key>
       <PropertyRef Name="vozacID" />
@@ -78,17 +95,18 @@ warning 6002: The table/view 'def.testna.lokacija' does not have a primary key d
     <Property Name="voziloID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="tip_vozila" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="nosivost" Type="int" Nullable="false" />
+    <Property Name="url_slike_vozila" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="voznja">
     <Key>
       <PropertyRef Name="voznjaID" />
     </Key>
     <Property Name="voznjaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="voziloID" Type="int" Nullable="false" />
+    <Property Name="voziloID" Type="int" />
     <Property Name="vozacID" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="Checkpoint_ibfk_1">
-    <End Role="voznja" Type="Self.voznja" Multiplicity="1" />
+    <End Role="voznja" Type="Self.voznja" Multiplicity="0..1" />
     <End Role="checkpoint" Type="Self.checkpoint" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="voznja">
@@ -112,7 +130,7 @@ warning 6002: The table/view 'def.testna.lokacija' does not have a primary key d
     </ReferentialConstraint>
   </Association>
   <Association Name="Narudzba_ibfk_1">
-    <End Role="voznja" Type="Self.voznja" Multiplicity="1" />
+    <End Role="voznja" Type="Self.voznja" Multiplicity="0..1" />
     <End Role="narudzba" Type="Self.narudzba" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="voznja">
@@ -148,7 +166,7 @@ warning 6002: The table/view 'def.testna.lokacija' does not have a primary key d
     </ReferentialConstraint>
   </Association>
   <Association Name="Voznja_ibfk_1">
-    <End Role="vozilo" Type="Self.vozilo" Multiplicity="1" />
+    <End Role="vozilo" Type="Self.vozilo" Multiplicity="0..1" />
     <End Role="voznja" Type="Self.voznja" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="vozilo">
@@ -171,10 +189,11 @@ warning 6002: The table/view 'def.testna.lokacija' does not have a primary key d
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="familiaModelStoreContainer">
+  <EntityContainer Name="testnaModelStoreContainer">
     <EntitySet Name="jelo" EntityType="Self.jelo" Schema="testna" store:Type="Tables" />
     <EntitySet Name="narudzba" EntityType="Self.narudzba" Schema="testna" store:Type="Tables" />
     <EntitySet Name="narudzba_item" EntityType="Self.narudzba_item" Schema="testna" store:Type="Tables" />
+    <EntitySet Name="roles" EntityType="Self.roles" Schema="testna" store:Type="Tables" />
     <EntitySet Name="vozac" EntityType="Self.vozac" Schema="testna" store:Type="Tables" />
     <EntitySet Name="vozilo" EntityType="Self.vozilo" Schema="testna" store:Type="Tables" />
     <EntitySet Name="voznja" EntityType="Self.voznja" Schema="testna" store:Type="Tables" />

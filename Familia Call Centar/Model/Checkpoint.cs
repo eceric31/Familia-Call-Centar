@@ -10,14 +10,14 @@
 namespace Familia_Call_Centar.Model
 {
     using System;
-    using System.Collections.ObjectModel;
+    using System.Collections.Generic;
     
     public partial class checkpoint
     {
         public double longitude { get; set; }
         public double latitude { get; set; }
         public System.DateTime vrijeme_isporuke { get; set; }
-        public int voznjaID { get; set; }
+        public Nullable<int> voznjaID { get; set; }
     
         public virtual voznja voznja { get; set; }
     }

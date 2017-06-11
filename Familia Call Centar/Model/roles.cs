@@ -12,13 +12,10 @@ namespace Familia_Call_Centar.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class lokacija
+    public partial class roles
     {
-        public double longitude { get; set; }
-        public double latitude { get; set; }
-        public System.DateTime vrijeme_polaska { get; set; }
-        public int voznjaID { get; set; }
-    
-        public virtual voznja voznja { get; set; }
+        public int id { get; set; }
+        public string role { get; set; }
+        public string pass { get; set; }
     }
 }

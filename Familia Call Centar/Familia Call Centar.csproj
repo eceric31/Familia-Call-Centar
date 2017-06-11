@@ -91,6 +91,48 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\checkpoint.cs">
+      <DependentUpon>Familia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Familia.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Familia.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Familia.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Familia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Familia.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Familia.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\jelo.cs">
+      <DependentUpon>Familia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\lokacija.cs">
+      <DependentUpon>Familia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\narudzba.cs">
+      <DependentUpon>Familia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\narudzba_item.cs">
+      <DependentUpon>Familia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\roles.cs">
+      <DependentUpon>Familia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\vozac.cs">
+      <DependentUpon>Familia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\vozilo.cs">
+      <DependentUpon>Familia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\voznja.cs">
+      <DependentUpon>Familia.tt</DependentUpon>
+    </Compile>
     <Compile Include="Servis\Service.cs" />
     <Compile Include="Startup.xaml.cs">
       <DependentUpon>Startup.xaml</DependentUpon>
@@ -166,45 +208,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\checkpoint.cs">
-      <DependentUpon>Familia.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Familia.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Familia.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Familia.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Familia.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Familia.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Familia.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\jelo.cs">
-      <DependentUpon>Familia.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\lokacija.cs">
-      <DependentUpon>Familia.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\narudzba.cs">
-      <DependentUpon>Familia.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\narudzba_item.cs">
-      <DependentUpon>Familia.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\vozac.cs">
-      <DependentUpon>Familia.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\vozilo.cs">
-      <DependentUpon>Familia.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\voznja.cs">
-      <DependentUpon>Familia.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -250,16 +253,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Model\Familia.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Familia.edmx</DependentUpon>
-      <LastGenOutput>Familia.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model\Familia.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Familia.edmx</DependentUpon>
-      <LastGenOutput>Familia.cs</LastGenOutput>
-    </Content>
     <Resource Include="Slike vozila\3.jpg" />
     <Resource Include="Slike vozila\2.jpg" />
     <Resource Include="Slike vozila\1.jpg" />
@@ -270,6 +263,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\Familia.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Familia.edmx</DependentUpon>
+      <LastGenOutput>Familia.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Familia.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Familia.edmx</DependentUpon>
+      <LastGenOutput>Familia.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

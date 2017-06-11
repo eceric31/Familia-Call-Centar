@@ -28,6 +28,7 @@ namespace Familia_Call_Centar.Model
         public virtual DbSet<jelo> jelo { get; set; }
         public virtual DbSet<narudzba> narudzba { get; set; }
         public virtual DbSet<narudzba_item> narudzba_item { get; set; }
+        public virtual DbSet<roles> roles { get; set; }
         public virtual DbSet<vozac> vozac { get; set; }
         public virtual DbSet<vozilo> vozilo { get; set; }
         public virtual DbSet<voznja> voznja { get; set; }

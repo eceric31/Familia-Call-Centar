@@ -63,7 +63,7 @@ namespace Familia_Call_Centar.Utilities
                         reader["prezime_narucioca"].ToString(),
                         reader["broj_telefona_narucioca"].ToString(),
                         reader["ime_firme"].ToString(),
-                        reader["adresa_firme"].ToString(), DateTime.Now));
+                        reader["adresa_firme"].ToString()));
                     //ocekivano vrijeme isporuke ionako ne treba ni za sta
                 }
 
@@ -146,11 +146,10 @@ namespace Familia_Call_Centar.Utilities
             try
             {
                 connection.Open();
-                String statement = "UPDATE testna.narudzba SET ocekivano_vrijeme_isporuke = (@1)"
-                    + " where narudzbaID = " + narudzbaID;
+                String statement = "UPDATE narudzba SET ocekivano_vrijeme_isporuke = \"" + ocekVrijeme
+                    + "\" where narudzbaID = " + narudzbaID;
                 MySqlCommand cmd = new MySqlCommand(statement, connection);
                 cmd.CommandType = System.Data.CommandType.Text;
-                cmd.Parameters.AddWithValue("@1", ocekVrijeme);
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
             }
@@ -377,7 +376,7 @@ namespace Familia_Call_Centar.Utilities
                 connection.Open();
                 String statement = "select j.naziv, n_i.kvantitet, n.narudzbaID " +
                                    "from jelo j, narudzba n, narudzba_item n_i " +
-                                   "where n.narudzbaID = n_i.narudzbaID and j.jeloID = n_i.jeloID and n.voznjaID = 2 " +
+                                   "where n.narudzbaID = n_i.narudzbaID and j.jeloID = n_i.jeloID and n.status_narudzbe = 0 " +
                                    "group by n_i.narudzbaID, n_i.jeloID " +
                                    "order by n.adresa_firme, n.ocekivano_vrijeme_isporuke desc";
 
@@ -524,8 +523,19 @@ namespace Familia_Call_Centar.Utilities
         {
             String statement = null;
             if (tip.Equals("jelo")) statement = "update jelo set url_slike_jela = \"" + path + "\" where jeloID = " + id;
-            else if (tip.Equals("narudzba")) statement = "update narudzba set status_narudzbe = " 
+            else if (tip.Equals("narudzba")) statement = "update narudzba set status_narudzbe = "
                     + status + " where narudzbaID = " + id;
+            else if (tip.Equals("odgovorni_vozac")) statement = "update narudzba set odgovorni_vozac = "
+                    + status + " where narudzbaID = " + id;
+            else if (tip.Equals("izmjena_kolicina"))
+            {
+                statement =
+                    "update narudzba_item n_i join jelo j on (j.jeloID = n_i.jeloID)" +
+                    " set n_i.kvantitet = " + status + " , n_i.ukupna_cijena = j.cijena * " + status +
+                    " where j.naziv = \"" + path + "\" and n_i.narudzbaID = " + id;
+            }
+            else if (tip.Equals("vrijeme_isporuke")) statement = "update narudzba set vrijeme_isporuke = \""
+                     + path + "\" where narudzbaID = " + id;
             else statement = "update vozilo set url_slike_vozila = \"" + path + "\" where voziloID = " + id;
 
             try

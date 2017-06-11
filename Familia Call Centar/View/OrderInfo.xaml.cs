@@ -10,6 +10,7 @@ using System.Globalization;
 using Familia_Call_Centar.Servis;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace Familia_Call_Centar.View
 {
@@ -48,6 +49,7 @@ namespace Familia_Call_Centar.View
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.StackTrace);
                 MessageBox.Show("Greška, server baze podataka nije u funkciji!");
                 Page dash = new Dashboard(service);
                 NavigationService.Navigate(dash);
@@ -63,6 +65,7 @@ namespace Familia_Call_Centar.View
 
         private void daljeClick(object sender, RoutedEventArgs e)
         {
+            Regex reg = new Regex("[0-9]{9}");
             if (!dataRowSelected)
             {
                 if (String.IsNullOrEmpty(imeInput.Text) || String.IsNullOrEmpty(prezimeInput.Text) ||
@@ -73,8 +76,10 @@ namespace Familia_Call_Centar.View
                 }
                 else
                 {
-                    if(!String.IsNullOrEmpty(combobox.Text))
-                        save();
+                    if (!String.IsNullOrEmpty(combobox.Text))
+                        if (reg.IsMatch(brTelInput.Text))
+                            save();
+                        else MessageBox.Show("Nevalidan broj telefona!");
                     else
                         MessageBox.Show("Unesite očekivano vrijeme isporuke!");
                 }
@@ -82,7 +87,9 @@ namespace Familia_Call_Centar.View
             else
             {
                 if (!String.IsNullOrEmpty(combobox.Text))
-                    save();
+                    if (reg.IsMatch(brTelInput.Text))
+                        save();
+                    else MessageBox.Show("Nevalidan broj telefona!"); 
                 else
                     MessageBox.Show("Unesite očekivano vrijeme isporuke!");
             }
@@ -92,13 +99,12 @@ namespace Familia_Call_Centar.View
         {
             if(dataRowSelected)
             {
-                narudzba = new narudzba(ime, prezime, brTel, firma, adresa, getDateTime());
+                narudzba = new narudzba(ime, prezime, brTel, firma, adresa);
                 dataRowSelected = false;
             }
             else
             {
-                narudzba = new narudzba(imeInput.Text, prezimeInput.Text, brTelInput.Text, firmaInput.Text, adresaInput.Text,
-                    getDateTime());
+                narudzba = new narudzba(imeInput.Text, prezimeInput.Text, brTelInput.Text, firmaInput.Text, adresaInput.Text);
             }
             saveOrder();
             Page foodPicker = new FoodPick(narudzba.narudzbaID, service);

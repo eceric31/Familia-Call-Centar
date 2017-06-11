@@ -10,36 +10,43 @@
 namespace Familia_Call_Centar.Model
 {
     using System;
-    using System.Collections.ObjectModel;
+    using System.Collections.Generic;
     
     public partial class narudzba
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public narudzba(string ime, string prezime, string br_tel, string firma, string adresa, DateTime ocekivano_vrijeme)
+        public narudzba()
         {
-            this.narudzba_item = new ObservableCollection<narudzba_item>();
+            this.narudzba_item = new HashSet<narudzba_item>();
+        }
+
+        public narudzba(string ime, string prezime, string br_tel, string firma, string adresa)
+        {
+            this.narudzba_item = new HashSet<narudzba_item>();
             ime_narucioca = ime;
             prezime_narucioca = prezime;
             broj_telefona_narucioca = br_tel;
             ime_firme = firma;
             adresa_firme = adresa;
-            ocekivano_vrijeme_isporuke = ocekivano_vrijeme;
             //po defaultu
             voznjaID = 2;
         }
-    
+
+
         public int narudzbaID { get; set; }
         public string ime_narucioca { get; set; }
         public string prezime_narucioca { get; set; }
         public string broj_telefona_narucioca { get; set; }
         public string ime_firme { get; set; }
         public string adresa_firme { get; set; }
-        public System.DateTime ocekivano_vrijeme_isporuke { get; set; }
-        public System.DateTime vrijeme_isporuke { get; set; }
-        public int voznjaID { get; set; }
+        public string ocekivano_vrijeme_isporuke { get; set; }
+        public string vrijeme_isporuke { get; set; }
+        public Nullable<int> voznjaID { get; set; }
+        public Nullable<int> status_narudzbe { get; set; }
+        public Nullable<int> odgovorni_vozac { get; set; }
     
         public virtual voznja voznja { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ObservableCollection<narudzba_item> narudzba_item { get; set; }
+        public virtual ICollection<narudzba_item> narudzba_item { get; set; }
     }
 }

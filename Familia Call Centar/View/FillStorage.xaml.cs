@@ -51,11 +51,31 @@ namespace Familia_Call_Centar.View
             if(res == MessageBoxResult.Yes)
             {
                 DataTable tab = ((DataView)jelaGrid.ItemsSource).ToTable();
-                generatePDF(tab);
-                handler.kreirajPredIsporuku(tab);
-                
-                Page dash = new Dashboard(service);
-                NavigationService.Navigate(dash);
+                int var = -1;
+                Boolean tmp = true;
+                for(int i = 0; i < tab.Rows.Count; i++)
+                {
+                    if (String.IsNullOrEmpty(tab.Rows[i][3].ToString()))
+                    {
+                        tab.Rows[i][3] = 0;
+                        continue;
+                    }
+
+                    tmp = Int32.TryParse(tab.Rows[i][3].ToString(), out var);
+                    var = i + 1;
+
+                    if (!tmp) break;
+                }
+
+                if (tmp)
+                {
+                    generatePDF(tab);
+                    handler.kreirajPredIsporuku(tab);
+
+                    Page dash = new Dashboard(service);
+                    NavigationService.Navigate(dash);
+                }
+                else MessageBox.Show("Netačan format količine, na indeksu " + var + "!");
             }
         }
 
@@ -67,7 +87,7 @@ namespace Familia_Call_Centar.View
 
         public void generatePDF(DataTable tab)
         {
-            using (FileStream stream = new FileStream("C:\\Users\\Edin\\Desktop\\Izvjestaj "
+            using (FileStream stream = new FileStream("C:\\Users\\Edin\\Desktop\\Međuskladište "
                     + DateTime.Now.Day.ToString() + "." + DateTime.Now.Month.ToString()
                     + "." + DateTime.Now.Year.ToString()+ ".pdf", FileMode.Create)) 
             {
@@ -77,7 +97,7 @@ namespace Familia_Call_Centar.View
                 doc.AddTitle("Izvjestaj za dan " + DateTime.Now.Day.ToString() + "." + DateTime.Now.Month.ToString()
                             + "." + DateTime.Now.Year.ToString());
 
-                iTextSharp.text.Paragraph p = new iTextSharp.text.Paragraph("Izvještaj za dan "
+                iTextSharp.text.Paragraph p = new iTextSharp.text.Paragraph("Međusklatište za dan "
                     + DateTime.Now.Day.ToString() + "." + DateTime.Now.Month.ToString()
                     + "." + DateTime.Now.Year.ToString());
                 doc.Add(p);

@@ -84,7 +84,6 @@ namespace Familia_Call_Centar.View
                 
                 service.Jela = jela;
                 service.Narudzbe = isporukaTable;
-
                 for(int i = 0; i < isporukaTable.Rows.Count; i++)
                     handler.updateEntry("narudzba", null, Convert.ToInt32(isporukaTable.Rows[i][7]), 1);
 

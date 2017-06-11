@@ -10,11 +10,11 @@
 namespace Familia_Call_Centar.Model
 {
     using System;
-    using System.Collections.ObjectModel;
+    using System.Collections.Generic;
     
     public partial class narudzba_item
     {
-        public narudzba_item(int kvantitet, Double ukupna_cijena, int jeloID, int narudzbaID) 
+        public narudzba_item(int kvantitet, Double ukupna_cijena, int jeloID, int narudzbaID)
         {
             this.kvantitet = kvantitet;
             this.ukupna_cijena = ukupna_cijena;
